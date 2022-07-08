@@ -1,10 +1,13 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import HomePage from './HomePage';
-import BookPage from './BookPage';
-import UserBooks from './UserBooks';
-import Cart from './Cart';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './Layout/Header';
+import Footer from './Layout/Footer';
+import HomePage from './bookComponents/HomePage';
+import BookPage from './bookComponents/BookPage';
+import UserBooks from './userComponents/UserBooks';
+import Cart from './userComponents/Cart';
+import Login from './userComponents/Login';
+import SignUp from './userComponents/SignUp';
+import LikedBooks from './userComponents/LikedBooks';
 
 function App() {
   return (
@@ -13,8 +16,11 @@ function App() {
       <Footer />
       <Routes>
         <Route path="/" element={<HomePage/>} />
-        <Route path="/book:BookID" element={<BookPage/>} />
-        <Route path="/userBooks" element={<UserBooks/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/sign-up" element={<SignUp/>} />
+        <Route path="/book/:BookID" element={<BookPage/>} />
+        <Route path="/detach/:userID" element={<UserBooks/>} />
+        <Route path="/favorites/:userID" element={<LikedBooks/>} />
         <Route path="/cart" element={<Cart/>} />
       </Routes>
     </BrowserRouter>

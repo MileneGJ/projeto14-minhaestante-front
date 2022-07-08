@@ -5,7 +5,7 @@ function Header () {
     return (
         <HeaderStyled> 
         <img src={logo} alt="" />
-        <input type="text" placeholder="" />
+        <input type="search" placeholder="" />
         <ion-icon name="search-outline"></ion-icon>
         <ion-icon name="menu-outline"></ion-icon>
       </HeaderStyled>
