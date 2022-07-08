@@ -8,6 +8,8 @@ import Cart from './userComponents/Cart';
 import Login from './userComponents/Login';
 import SignUp from './userComponents/SignUp';
 import LikedBooks from './userComponents/LikedBooks';
+import UserMenu from './userComponents/UserMenu';
+import LogNewBook from './bookComponents/LogNewBook';
 
 function App() {
   return (
@@ -20,8 +22,10 @@ function App() {
         <Route path="/sign-up" element={<SignUp/>} />
         <Route path="/book/:BookID" element={<BookPage/>} />
         <Route path="/detach/:userID" element={<UserBooks/>} />
+        <Route path="/new-detach" element={<LogNewBook />} />
         <Route path="/favorites/:userID" element={<LikedBooks/>} />
         <Route path="/cart" element={<Cart/>} />
+        <Route path="/profile" element={<UserMenu/>} />
       </Routes>
     </BrowserRouter>
   );

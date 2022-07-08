@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 function Footer () {
+    let userID=10;
     return (
         <FooterStyled> 
         <Link to="/">

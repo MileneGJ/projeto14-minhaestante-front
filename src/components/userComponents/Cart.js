@@ -6,7 +6,10 @@ function Cart () {
     )
 }
 
-const Container = styled.div``
+const Container = styled.div`
+margin-top:110px;
+padding:20px;
+`
 
 
 export default Cart

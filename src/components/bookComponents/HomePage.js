@@ -46,7 +46,7 @@ function HomePage () {
 }
 
 const Container = styled.div`
-margin-top:110px;
+margin:110px 0;
 padding:20px;
 `
 
@@ -59,20 +59,22 @@ flex-wrap:wrap;
 
 const BookStyled = styled.div`
 width:140px;
-height:180px;
-overflow:hidden;
+height:200px;
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
+overflow:hidden;
 img{
     height:110px;
 }
 h2{
+    margin:8px 0;
     color:#878460;
     font-weight:700;
     font-size:20px;
-    line-height:30px;
+    line-height:22px;
+    text-align:center;
 }
 p{
     color:#878460;
