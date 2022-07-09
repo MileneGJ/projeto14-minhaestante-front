@@ -1,10 +1,35 @@
 import styled from "styled-components";
-import logo from '../../assets/images/logo.png'
+import SearchBookContext from '../../contexts/searchBookContext';
+import BookContext from "../../contexts/bookContext";
+import { useState, useContext } from 'react';
+import logo from '../../assets/images/logo.png';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  let navigate = useNavigate();
+  const { setSearchBookList } = useContext(SearchBookContext);
+  const { bookList } = useContext(BookContext);
+  const [showMenu, setShowMenu] = useState(false);
+  const Allgenres = bookList?.map(b => b.genre);
+  let genres = [... new Set(Allgenres)];   //array with unique values
 
-  function showGenres() {
+  function searchByGenre(g) {
+    let URL = `http://localhost:5000/books?field=genre&keyword=${g}`
+    let promise = axios.get(URL)
+    promise.then(response => {
+      setShowMenu(false);
+      setSearchBookList(response.data);
+      navigate("/search")
+    });
+    promise.catch(handleError)
+  }
+  function handleError (error) {
+    alert(`${error.response.status} - ${error.response.data}`)
+  }
 
+  function performSearch (e) {
+    e.preventDefault()
   }
 
   return (
@@ -12,17 +37,23 @@ function Header() {
       <img src={logo} alt="" />
       <form onSubmit={performSearch}>
         <input type="search" placeholder="" />
-        <label for="field">Por campo:</label>
         <select id="field" name="field">
+        <option value="">Por campo</option>
           <option value="title">Título</option>
           <option value="author">Autor(a)</option>
           <option value="publisher">Editora</option>
           <option value="type">Formato</option>
           <option value="genre">Gênero</option>
         </select>
-      <ion-icon type="submit" name="search-outline"></ion-icon>
+        <button type="submit"><ion-icon name="search-outline"></ion-icon></button>
       </form>
-      <ion-icon onClick={showGenres} name="menu-outline"></ion-icon>
+      <ion-icon onClick={() => { setShowMenu(!showMenu) }} name="menu-outline"></ion-icon>
+      <GenreList style={{ display: showMenu ? 'flex' : 'none' }}>
+        <div onClick={() => { setShowMenu(false) }} ></div>
+        <ul>
+          {genres.map((g, index) => <li key={index} onClick={() => searchByGenre(g)}>{g}</li>)}
+        </ul>
+      </GenreList>
     </HeaderStyled>
   )
 }
@@ -47,15 +78,46 @@ input {
     color:#E7DDC8;
     width:50%;
 }
-
+select{
+  background-color:transparent;
+  border:none;
+  font-size:16px;
+  color:#E7DDC8;
+  margin-right:40px;
+}
 ion-icon{
     color:#FDA279;
     font-size:28px;
+}
+button{
+  background-color: transparent;
+  border:none;
 }
 
 img{
   height:60px;
 }
+`
+
+const GenreList = styled.div`
+position:fixed;
+display:flex;
+top: 70px;
+left:0;
+div{
+  background-color:rgba(0,0,0,0.2);
+  width:50vh;
+  height:90vh;
+}
+ul{
+  background-color:#96482B;
+  width:50vh;
+  box-sizing:border-box;
+  padding:20px;
+  font-size:16px;
+  color:#E7DDC8;
+}
+
 `
 
 export default Header
