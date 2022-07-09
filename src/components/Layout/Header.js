@@ -60,6 +60,7 @@ function Header() {
 
 const HeaderStyled = styled.div`
 width:100%;
+z-index:1;
 height:70px;
 background-color:#96482B;
 position:fixed;

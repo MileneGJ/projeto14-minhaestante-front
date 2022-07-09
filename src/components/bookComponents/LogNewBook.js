@@ -143,7 +143,7 @@ button{
     width:200px;
     background-color:#878460;
     border:none;
-    border-radius:5px;
+    border-radius:50px;
     color:#E7DDC8;
     font-size:16px;
 }
