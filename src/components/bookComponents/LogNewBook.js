@@ -110,7 +110,7 @@ function LogNewBook() {
 }
 
 const Container = styled.div`
-margin-top:90px;
+margin-top:70px;
 padding:20px;
 
 h1{

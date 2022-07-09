@@ -40,6 +40,7 @@ ion-icon{
 
 img{
   height:60px;
+  margin-left: 16px;
 }
 `
 

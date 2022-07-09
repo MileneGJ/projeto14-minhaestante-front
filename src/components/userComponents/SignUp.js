@@ -7,7 +7,7 @@ function SignUp () {
 }
 
 const Container = styled.div`
-margin-top:110px;
+margin-top:70px;
 padding:20px;
 `
 

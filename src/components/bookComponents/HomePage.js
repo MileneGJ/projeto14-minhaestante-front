@@ -15,7 +15,7 @@ function HomePage () {
     },[])
 
     function handleError (error){
-        alert(`${error.response.status} - ${error.response.data}`)
+        // alert(`${error.response.status} - ${error.response.data}`)
     }
 
     function Book ({title, image, author}) {
@@ -46,7 +46,7 @@ function HomePage () {
 }
 
 const Container = styled.div`
-margin:110px 0;
+margin:70px 0;
 padding:20px;
 `
 
