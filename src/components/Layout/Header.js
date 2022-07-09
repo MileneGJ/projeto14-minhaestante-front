@@ -1,15 +1,30 @@
 import styled from "styled-components";
 import logo from '../../assets/images/logo.png'
 
-function Header () {
-    return (
-        <HeaderStyled> 
-        <img src={logo} alt="" />
+function Header() {
+
+  function showGenres() {
+
+  }
+
+  return (
+    <HeaderStyled>
+      <img src={logo} alt="" />
+      <form onSubmit={performSearch}>
         <input type="search" placeholder="" />
-        <ion-icon name="search-outline"></ion-icon>
-        <ion-icon name="menu-outline"></ion-icon>
-      </HeaderStyled>
-    )
+        <label for="field">Por campo:</label>
+        <select id="field" name="field">
+          <option value="title">Título</option>
+          <option value="author">Autor(a)</option>
+          <option value="publisher">Editora</option>
+          <option value="type">Formato</option>
+          <option value="genre">Gênero</option>
+        </select>
+      <ion-icon type="submit" name="search-outline"></ion-icon>
+      </form>
+      <ion-icon onClick={showGenres} name="menu-outline"></ion-icon>
+    </HeaderStyled>
+  )
 }
 
 const HeaderStyled = styled.div`
