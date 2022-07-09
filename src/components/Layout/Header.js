@@ -12,7 +12,7 @@ function Header() {
   const { bookList } = useContext(BookContext);
   const [showMenu, setShowMenu] = useState(false);
   const Allgenres = bookList?.map(b => b.genre);
-  let genres = [... new Set(Allgenres)];   //array with unique values
+  let genres = [...new Set(Allgenres)];   //array with unique values
 
   function searchByGenre(g) {
     let URL = `http://localhost:5000/books?field=genre&keyword=${g}`
@@ -38,7 +38,7 @@ function Header() {
       <form onSubmit={performSearch}>
         <input type="search" placeholder="" />
         <select id="field" name="field">
-        <option value="">Por campo</option>
+        <option value="">Buscar em</option>
           <option value="title">Título</option>
           <option value="author">Autor(a)</option>
           <option value="publisher">Editora</option>
@@ -83,7 +83,7 @@ select{
   border:none;
   font-size:16px;
   color:#E7DDC8;
-  margin-right:40px;
+  margin-right:1vh;
 }
 ion-icon{
     color:#FDA279;
@@ -106,18 +106,18 @@ top: 70px;
 left:0;
 div{
   background-color:rgba(0,0,0,0.2);
-  width:50vh;
+  width:70vh;
   height:90vh;
 }
 ul{
   background-color:#96482B;
-  width:50vh;
+  width:30vh;
   box-sizing:border-box;
   padding:20px;
-  font-size:16px;
-  color:#E7DDC8;
+  line-height:40px;
+  font-size:24px;
+  color:#FDA279;
 }
-
 `
 
 export default Header

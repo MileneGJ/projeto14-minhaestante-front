@@ -1,18 +1,21 @@
 import styled from "styled-components";
 import searchBookContext from '../../contexts/searchBookContext';
-import { useEffect, useContext } from 'react';
-import axios from 'axios';
+import { useContext } from 'react';
+import { Link } from "react-router-dom";
 
 function SearchPage() {
     const { searchBookList } = useContext(searchBookContext);
 
-    function Book({ title, image, author }) {
+    function Book({ title, image, author, price, bookID }) {
         return (
-            <BookStyled>
-                <img src={image} alt="" />
-                <h2>{title}</h2>
-                <p>{author}</p>
-            </BookStyled>
+            <Link to={`/book/${bookID}`} style={{ textDecoration: 'none' }}>
+                <BookStyled>
+                    <img src={image} alt="" />
+                    <h2>{title}</h2>
+                    <p>{author}</p>
+                    <p>{price}</p>
+                </BookStyled>
+            </Link>
         )
     }
 
@@ -23,6 +26,8 @@ function SearchPage() {
                     searchBookList.map((b, index) =>
                         <Book
                             key={index}
+                            bookID={b._id}
+                            price={b.price}
                             title={b.title}
                             image={b.image}
                             author={b.author}
