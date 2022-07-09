@@ -1,22 +1,10 @@
 import styled from "styled-components";
-import BookContext from '../../contexts/bookContext';
+import searchBookContext from '../../contexts/searchBookContext';
 import { useEffect, useContext } from 'react';
 import axios from 'axios';
 
-function HomePage() {
-    const { bookList, setBookList } = useContext(BookContext);
-    useEffect(() => {
-            let URL = 'http://localhost:5000/books'
-            let promise = axios.get(URL)
-            promise.then(response => {
-                setBookList(response.data);
-            })
-            promise.catch(handleError)
-    }, [])
-
-    function handleError(error) {
-        alert(`${error.response.status} - ${error.response.data}`)
-    }
+function SearchPage() {
+    const { searchBookList } = useContext(searchBookContext);
 
     function Book({ title, image, author }) {
         return (
@@ -31,8 +19,8 @@ function HomePage() {
     return (
         <Container>
             <Booklisting>
-                {bookList.length > 0 ?
-                    bookList.map((b, index) =>
+                {searchBookList.length > 0 ?
+                    searchBookList.map((b, index) =>
                         <Book
                             key={index}
                             title={b.title}
@@ -81,4 +69,4 @@ p{
 }
 `
 
-export default HomePage
+export default SearchPage

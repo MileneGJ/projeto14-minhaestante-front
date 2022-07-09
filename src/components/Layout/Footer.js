@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import UserContext from "../../contexts/userContext";
+import { useContext } from "react";
 
 function Footer () {
-    let userID=10;
+    let userID = 10;
+
     return (
         <FooterStyled> 
         <Link to="/">
