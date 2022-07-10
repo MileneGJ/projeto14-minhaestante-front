@@ -21,7 +21,7 @@ function Header() {
   let genres = [...new Set(Allgenres)];   //array with unique values
 
   function searchByGenre(g) {
-    let URL = `http://localhost:5000/books?field=genre&keyword=${g}`
+    let URL = `https://apimyshelf.herokuapp.com/books?field=genre&keyword=${g}`
     let promise = axios.get(URL)
     promise.then(response => {
       setShowMenu(false);
@@ -36,7 +36,7 @@ function Header() {
 
   function performSearch (e) {
     e.preventDefault()
-    let URL = `http://localhost:5000/books?field=${searchInfo.field}&keyword=${searchInfo.keyword}`
+    let URL = `https://apimyshelf.herokuapp.com/books?field=${searchInfo.field}&keyword=${searchInfo.keyword}`
     let promise = axios.get(URL)
     promise.then(response => {
       setSearchBookList(response.data);
@@ -75,7 +75,7 @@ function Header() {
 const HeaderStyled = styled.div`
 width:100%;
 z-index:1;
-height:60px;
+height:70px;
 background-color:#96482B;
 position:fixed;
 padding-right:20px;

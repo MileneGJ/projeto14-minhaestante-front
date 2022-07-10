@@ -28,8 +28,9 @@ function FooterLogin() {
         body
       );
       localStorage.setItem("token", resp.data.token);
+      localStorage.setItem("userId", resp.data.userId);
       localStorage.setItem("name", resp.data.name);
-      
+      localStorage.setItem("email", resp.data.email);
       setDisable(false);
     } catch (error) {
       console.log(error);

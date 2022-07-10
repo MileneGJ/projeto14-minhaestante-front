@@ -129,11 +129,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 85vh;
-  /* position: fixed; */
-  /* bottom: 0; */
-  /* width: 100%; */
-  /* height: 450px; */
-  /* border-radius: 40px 40px 0 0; */
+
   > div {
     height: 80%;
     width: 100%;
@@ -150,7 +146,6 @@ const Container = styled.div`
   }
 `;
 const Forms = styled.form`
-  width: 85%;
   display: flex;
   flex-direction: column;
   justify-content: center;
