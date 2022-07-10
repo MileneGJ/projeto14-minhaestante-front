@@ -10,12 +10,12 @@ function BookPage() {
     const { bookList } = useContext(BookContext)
     const book = bookList.filter(b => b._id === BookID)[0]
     const { userData, setUserData } = useContext(UserContext)
-    
+    let token = localStorage.getItem("token");
     
     function verifyLike () {
         let isBookFavorite
-        if(userData.token){
-            isBookFavorite = userData.favorites.filter(f => f._id === BookID)
+        if(userData.favorites?.length>0){
+            isBookFavorite = userData.favorites.filter(f => f?._id === BookID)
             if(isBookFavorite.length>0){
                 return true
             } else {
@@ -28,8 +28,8 @@ function BookPage() {
     
     function verifyCart () {
         let isBookOnCart 
-        if(userData.token){
-            isBookOnCart = userData.cart.filter(f => f._id === BookID)
+        if(userData.cart?.length>0){
+            isBookOnCart = userData.cart.filter(c => c?._id === BookID)
             if(isBookOnCart.length>0){
                 return true
             } else {
@@ -41,17 +41,35 @@ function BookPage() {
     }
 
     function addToCart(){
-        const URL = `http://localhost:5000/users/cart/${userData.userId}`
-        const promise = axios.post(URL,book)
+        if(userData.userId){
+            const URL = `http://localhost:5000/users/cart/${userData.userId}`
+        const config = {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+        const promise = axios.post(URL,book,config)
         promise.then(response=>setUserData(response.data))
         promise.catch(error=>alert(error.response.data))  
+        } else {
+            console.log('subir login')
+        }
     }
 
     function addToFavorites() {
+        if(userData.userId){
         const URL = `http://localhost:5000/users/favorites/${userData.userId}`
-        const promise = axios.post(URL,book)
+        const config = {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+        const promise = axios.post(URL,book,config)
         promise.then(response=>setUserData(response.data))
-        promise.catch(error=>alert(error.response.data))        
+        promise.catch(error=>alert(error.response.data))       
+        } else {
+            console.log('subir login')
+        } 
     }
 
 

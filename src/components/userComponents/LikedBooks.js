@@ -10,7 +10,7 @@ function LikedBooks() {
     const [favorites, setFavorites] = useState([])
 
     useEffect(() => {
-        if (userData.token) {
+        if (userData.favorites) {
             setFavorites(userData.favorites)
         } else {
             setAppearFooterLogin(true)
@@ -23,7 +23,9 @@ function LikedBooks() {
             <div style={{ display: appearFooterLogin ? 'flex' : 'none' }}>
                 <FooterLogin show={setAppearFooterLogin} />
             </div>
-            {favorites?.length > 0 ?
+
+            <div>
+                {favorites?.length > 0 ?
                 favorites.map((f, index) =>
                     <Book
                         key={index}
@@ -35,6 +37,7 @@ function LikedBooks() {
                     />)
                 :
                 ""}
+            </div>
         </Container>
     )
 }
@@ -44,10 +47,18 @@ margin:60px  0;
 padding:20px;
 box-sizing:border-box;
 h1{
+    margin:30px 0 30px 15px;
     font-size: 20px;
     font-weight: 700;
     color: #878460;
     line-height:60px;
+}
+div{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
 }
 `
 
