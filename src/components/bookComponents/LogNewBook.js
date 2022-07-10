@@ -146,6 +146,7 @@ button{
     border-radius:50px;
     color:#E7DDC8;
     font-size:16px;
+    font-weight:700;
 }
 
 `

@@ -7,12 +7,22 @@ function BookPage() {
     const { BookID } = useParams()
     const { bookList } = useContext(BookContext)
     const book = bookList.filter(b => b._id === BookID)[0]
+
+    function addToCart(){
+
+    }
+
+    function addToFavorites() {
+        
+    }
+
+
     return (
         <Container>
                 <h1>{book.title}</h1>
                 <div>
-                    <ion-icon name="heart"></ion-icon>
-                    <ion-icon name="cart"></ion-icon>
+                    <ion-icon onClick={addToFavorites} name="heart"></ion-icon>
+                    <ion-icon onClick={addToCart} name="cart"></ion-icon>
                 </div>
                 <img src={book.image} alt="" />
                 <ul>
@@ -24,7 +34,7 @@ function BookPage() {
                     <li>{`Formato: ${book.type}`}</li>
                     <li>{`Páginas: ${book.pages}`}</li>
                 </ul>
-                <button>Comprar livro</button>
+                <button onClick={addToCart}>Comprar livro</button>
         </Container>
     )
 }
@@ -70,12 +80,13 @@ img{
 button{
     margin-top:40px;
     height:40px;
-    width:120px;
+    width:140px;
     background-color:#878460;
     border-radius:50px;
     border:none;
     color:#E7DDC8;
     font-size:16px;
+    font-weight:700;
 }
 `
 
