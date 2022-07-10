@@ -1,20 +1,21 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../../contexts/userContext";
 
 function UserBooks () {
-    const userID=10
 const [userBooks, setUserBooks] = useState([])
-/*
+const {userData} = useContext(UserContext)
+
 useEffect(()=>{
-    const URL=`localhost:5000/users/${userID}`;
+    const URL=`localhost:5000/books/?field=userID&keyword=${userData.userId}`;
     const promise = axios.get(URL)
     promise.then(response=>{
         setUserBooks(response.data)
     })
     promise.catch(handleError)
-},[])*/
+},[])
 
 function handleError (error){
     alert(`${error.response.status} - ${error.response.data}`)
@@ -61,6 +62,7 @@ function AddNewBook () {
 const Container = styled.div`
 margin:60px  0;
 padding:20px;
+box-sizing:border-box;
 `
 
 const BookstoSell = styled.div`

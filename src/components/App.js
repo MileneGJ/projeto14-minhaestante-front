@@ -40,9 +40,9 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/book/:BookID" element={<BookPage />} />
-              <Route path="/detach/:userID" element={<UserBooks />} />
+              <Route path="/detach/" element={<UserBooks />} />
               <Route path="/new-detach" element={<LogNewBook />} />
-              <Route path="/favorites/:userID" element={<LikedBooks />} />
+              <Route path="/favorites/" element={<LikedBooks />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/profile" element={<UserMenu />} />
               <Route path="/footer-sign-up" element={<FooterSignUp />} />

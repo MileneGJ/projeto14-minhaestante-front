@@ -1,15 +1,18 @@
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Bars } from "react-loader-spinner";
 import axios from "axios";
+import FooterSignUp from "./FooterSignUp";
+
 function FooterLogin() {
+  const [appearFooterSignUp, setAppearFooterSignUp] = useState(false)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
   const [buttonCtt, setButtonCtt] = useState("Entrar");
+
   async function signInHandler(event) {
     event.preventDefault();
     setButtonCtt(<loadingData.Component {...loadingData.props} />);
@@ -26,7 +29,7 @@ function FooterLogin() {
       );
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("name", resp.data.name);
-      navigate("/");
+      
       setDisable(false);
     } catch (error) {
       console.log(error);
@@ -35,9 +38,15 @@ function FooterLogin() {
       setButtonCtt("Entrar");
     }
   }
+
+
+  function appearSignUp () {
+    setAppearFooterSignUp(true)
+  }
+
   return (
     <Container>
-      <div>
+      <div  style={{display:appearFooterSignUp?'none':'flex'}}>
         <p>Conecte-se à sua conta!</p>
         <Forms onSubmit={signInHandler}>
           <Disabled disabled={disable}>
@@ -60,8 +69,9 @@ function FooterLogin() {
             <button type="submit">{buttonCtt}</button>
           </Disabled>
         </Forms>
-        <Linked to={"/footer-sign-up"}>Ainda não tem cadastro? Clique aqui!</Linked>
+        <Linked onClick={appearSignUp}>Ainda não tem cadastro? Clique aqui!</Linked>
       </div>
+      <div style={{display:appearFooterSignUp?'flex':'none'}} ><FooterSignUp show={setAppearFooterSignUp} /> </div>
     </Container>
   );
 }
@@ -88,26 +98,27 @@ const loadingData = {
 };
 
 const Container = styled.div`
- margin: 60px 0;
-  padding: 20px;
-  background-color: #00000083;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 85vh;
+position:fixed;
+top:60px;
+left:0;
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
+width:100%;
+height:100vh;
+background-color: rgba(0,0,0,0.2);
   > div {
     display: flex;
+    margin-bottom:110px;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    position: fixed;
-    bottom: 60px;
     width: 100%;
     height: 300px;
     border-radius: 40px 40px 0 0;
     background-color: #96482b;
     p {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 500;
       color: #fda279;
     }
@@ -149,7 +160,7 @@ const Forms = styled.form`
     font-weight: 700;
   }
 `;
-const Linked = styled(Link)`
+const Linked = styled.p`
   color: #fda279;
   font-size: 14px;
   font-weight: 500;

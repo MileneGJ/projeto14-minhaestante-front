@@ -65,12 +65,13 @@ h2{
     margin:8px 0;
     color:#878460;
     font-weight:700;
-    font-size:20px;
+    font-size:18px;
     line-height:22px;
     text-align:center;
 }
 p{
     color:#878460;
+    font-size:16px;
 }
 `
 

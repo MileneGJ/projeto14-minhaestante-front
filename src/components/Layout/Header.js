@@ -118,7 +118,7 @@ button{
 const GenreList = styled.div`
 position:fixed;
 display:flex;
-top: 70px;
+top: 60px;
 left:0;
 width:100%;
 

@@ -1,15 +1,20 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import UserContext from "../../contexts/userContext";
+import { useState, useContext } from "react";
 import { Bars } from "react-loader-spinner";
 import axios from "axios";
+
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {setUserData} = useContext(UserContext)
 
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
   const [buttonCtt, setButtonCtt] = useState("Entrar");
+  
   async function signInHandler(event) {
     event.preventDefault();
     setButtonCtt(<loadingData.Component {...loadingData.props} />);
@@ -24,6 +29,7 @@ function Login() {
         "https://apimyshelf.herokuapp.com/sign-in",
         body
       );
+      setUserData(resp.data);
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("name", resp.data.name);
       navigate("/");

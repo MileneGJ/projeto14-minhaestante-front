@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Bars } from "react-loader-spinner";
 import axios from "axios";
 import joi from "joi";
-function FooterSignUp() {
+
+function FooterSignUp({show}) {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [passConfirm, setPassConfirm] = useState("");
   const [disable, setDisable] = useState(false);
   const [buttonCtt, setButtonCtt] = useState("Cadastrar");
-  const navigate = useNavigate();
 
   const signUpSchema = joi.object({
     name: joi.string().required(),
@@ -44,7 +44,6 @@ function FooterSignUp() {
     }
     try {
       await axios.post("https://apimyshelf.herokuapp.com/sign-up", body);
-      navigate("/footer-login");
       setDisable(false);
     } catch (error) {
       console.log(error);
@@ -55,7 +54,6 @@ function FooterSignUp() {
   }
   return (
     <Container>
-      <div>
         <p>Cadastre-se!</p>
         <Forms onSubmit={signUpHandler}>
           <Disabled disabled={disable}>
@@ -94,8 +92,7 @@ function FooterSignUp() {
             <button type="submit">{buttonCtt}</button>
           </Disabled>
         </Forms>
-        <Linked to={"/footer-login"}>Já tem uma conta? Clique aqui!</Linked>
-      </div>
+        <Linked onClick={()=>{show(false)}} >Já tem uma conta? Clique aqui!</Linked>
     </Container>
   );
 }
@@ -122,14 +119,6 @@ const loadingData = {
 };
 
 const Container = styled.div`
-  margin: 60px 0;
-  padding: 20px;
-  background-color: #00000083;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 85vh;
-  > div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -145,7 +134,6 @@ const Container = styled.div`
       font-weight: 500;
       color: #fda279;
     }
-  }
 `;
 const Forms = styled.form`
   width: 85%;
@@ -183,7 +171,7 @@ const Forms = styled.form`
     font-weight: 700;
   }
 `;
-const Linked = styled(Link)`
+const Linked = styled.p`
   color: #fda279;
   font-size: 14px;
   font-weight: 500;
