@@ -75,7 +75,7 @@ function Header() {
 const HeaderStyled = styled.div`
 width:100%;
 z-index:1;
-height:60px;
+height:70px;
 background-color:#96482B;
 position:fixed;
 padding-right:20px;
