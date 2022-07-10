@@ -29,6 +29,7 @@ function Footer () {
 
 const FooterStyled = styled.div`
 width:100%;
+z-index:1;
 height:50px;
 background-color:#96482B;
 position:fixed;

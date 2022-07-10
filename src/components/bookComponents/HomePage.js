@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import BookContext from '../../contexts/bookContext';
 import { useEffect, useContext } from 'react';
 import axios from 'axios';
@@ -6,25 +7,28 @@ import axios from 'axios';
 function HomePage() {
     const { bookList, setBookList } = useContext(BookContext);
     useEffect(() => {
-            let URL = 'http://localhost:5000/books'
-            let promise = axios.get(URL)
-            promise.then(response => {
-                setBookList(response.data);
-            })
-            promise.catch(handleError)
+        let URL = 'http://localhost:5000/books'
+        let promise = axios.get(URL)
+        promise.then(response => {
+            setBookList(response.data);
+        })
+        promise.catch(handleError)
     }, [])
 
     function handleError(error) {
         alert(`${error.response.status} - ${error.response.data}`)
     }
 
-    function Book({ title, image, author }) {
+    function Book({ title, image, author, price, bookID }) {
         return (
-            <BookStyled>
-                <img src={image} alt="" />
-                <h2>{title}</h2>
-                <p>{author}</p>
-            </BookStyled>
+            <Link to={`/book/${bookID}`} style={{ textDecoration: 'none' }}>
+                <BookStyled>
+                    <img src={image} alt="" />
+                    <h2>{title}</h2>
+                    <p>{author}</p>
+                    <p>{price}</p>
+                </BookStyled>
+            </Link>
         )
     }
 
@@ -35,6 +39,8 @@ function HomePage() {
                     bookList.map((b, index) =>
                         <Book
                             key={index}
+                            bookID={b._id}
+                            price={b.price}
                             title={b.title}
                             image={b.image}
                             author={b.author}

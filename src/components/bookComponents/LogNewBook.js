@@ -9,12 +9,12 @@ function LogNewBook() {
     const [bookInfo, setBookInfo] = useState({
         title: "",
         author: "",
+        price:"",
         description: "",
-        publisher: "",
         type: "",
         genre:"",
         image:"",
-        ISBN:"",
+        publisher: "",
         pages:""
     })
 
@@ -36,19 +36,19 @@ function LogNewBook() {
                 return bookInfo.title;
             case "autor":
                 return bookInfo.author;
+                case "preço":
+                    return bookInfo.price;
             case "descrição":
                 return bookInfo.description;
-            case "editora":
-                return bookInfo.publisher;
             case "formato":
                 return bookInfo.type;
             case "genero":
                 return bookInfo.genre;
             case "imagem":
                 return bookInfo.image;
-            case "isbn":
-                return bookInfo.ISBN;
-            case "paginas":
+                case "editora":
+                    return bookInfo.publisher;
+                case "paginas":
                 return bookInfo.pages;
             default:
                 return "";
@@ -63,11 +63,11 @@ function LogNewBook() {
             case "autor":
                 setBookInfo({...bookInfo,author:e.target.value});    
             break
+            case "preço":
+                setBookInfo({...bookInfo,price:e.target.value});    
+            break
             case "descrição":
                 setBookInfo({...bookInfo,description:e.target.value});    
-            break
-            case "editora":
-                setBookInfo({...bookInfo,publisher:e.target.value});    
             break
             case "formato":
                 setBookInfo({...bookInfo,type:e.target.value});    
@@ -78,8 +78,8 @@ function LogNewBook() {
             case "imagem":
                 setBookInfo({...bookInfo,image:e.target.value});    
             break
-            case "isbn":
-                setBookInfo({...bookInfo,ISBN:e.target.value});    
+            case "editora":
+                setBookInfo({...bookInfo,publisher:e.target.value});    
             break
             case "paginas":
                 setBookInfo({...bookInfo,pages:e.target.value});    
@@ -96,12 +96,12 @@ function LogNewBook() {
             <form onSubmit={addBook}>
                 <input type="text" placeholder="Título" value={showField("titulo")} onChange={(e) => modifyField(e,"titulo")} />
                 <input type="text" placeholder="Autor(a)" value={showField("autor")} onChange={(e) => modifyField(e,"autor")} />
+                <input type="text" placeholder="Preço" value={showField("preço")} onChange={(e) => modifyField(e,"preço")} />
                 <input type="text" placeholder="Descrição" value={showField("descrição")} onChange={(e) => modifyField(e,"descrição")} />
-                <input type="text" placeholder="Editora" value={showField("editora")} onChange={(e) => modifyField(e,"editora")} />
                 <input type="text" placeholder="Formato: Ebook ou Livro Físico" value={showField("formato")} onChange={(e) => modifyField(e,"formato")} />
                 <input type="text" placeholder="Gênero" value={showField("genero")} onChange={(e) => modifyField(e,"genero")} />
                 <input type="url" placeholder="Imagem da capa (URL)" value={showField("imagem")} onChange={(e) => modifyField(e,"imagem")} />
-                <input type="text" placeholder="ISBN" value={showField("isbn")} onChange={(e) => modifyField(e,"isbn")} />
+                <input type="text" placeholder="Editora" value={showField("editora")} onChange={(e) => modifyField(e,"editora")} />
                 <input type="number" placeholder="Número de páginas" value={showField("paginas")} onChange={(e) => modifyField(e,"paginas")} />
                 <button type="submit"> Cadastrar novo livro </button>
             </form>
@@ -143,9 +143,10 @@ button{
     width:200px;
     background-color:#878460;
     border:none;
-    border-radius:5px;
+    border-radius:50px;
     color:#E7DDC8;
     font-size:16px;
+    font-weight:700;
 }
 
 `

@@ -79,11 +79,11 @@ h2{
 button{
     margin:20px 0;
     box-sizing:border-box;
-    height:50px;
+    height:55px;
     width:200px;
     border:none;
     background-color:#878460;
-    border-radius:5px;
+    border-radius:50px;
     font-weight:700;
     color:#E7DDC8;
     font-size:16px;
