@@ -20,6 +20,7 @@ import LikedBooks from "./userComponents/LikedBooks";
 import UserMenu from "./userComponents/UserMenu";
 import FooterSignUp from "./userComponents/FooterSignUp";
 import FooterLogin from "./userComponents/FooterLogin";
+import UpdateUser from "./userComponents/UpdateUser";
 
 function App() {
   let [userData, setUserData] = useState({});
@@ -47,6 +48,7 @@ function App() {
               <Route path="/profile" element={<UserMenu />} />
               <Route path="/footer-sign-up" element={<FooterSignUp />} />
               <Route path="/footer-login" element={<FooterLogin />} />
+              <Route path="/update-user" element={<UpdateUser/>}/>
             </Routes>
             <Footer />
           </BrowserRouter>

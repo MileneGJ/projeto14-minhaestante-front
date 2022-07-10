@@ -21,11 +21,13 @@ function Login() {
     };
     try {
       const resp = await axios.post(
-        "https://apimyshelf.herokuapp.com/sign-in",
+        "http://localhost:5000/sign-in",
         body
       );
       localStorage.setItem("token", resp.data.token);
+      localStorage.setItem("userId", resp.data.userId);
       localStorage.setItem("name", resp.data.name);
+      localStorage.setItem("email", resp.data.email);
       navigate("/");
       setDisable(false);
     } catch (error) {

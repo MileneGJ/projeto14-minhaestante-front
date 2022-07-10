@@ -1,18 +1,27 @@
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { Bars } from "react-loader-spinner";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import styled from "styled-components";
+import { Bars } from "react-loader-spinner";
 import joi from "joi";
-function SignUp() {
+
+export default function UpdateUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [passConfirm, setPassConfirm] = useState("");
   const [disable, setDisable] = useState(false);
-  const [buttonCtt, setButtonCtt] = useState("Cadastrar");
+  const [buttonCtt, setButtonCtt] = useState("Atualizar os dados");
+  const [oldPassword, setOldPassword] = useState("");
   const navigate = useNavigate();
+  let userId = localStorage.getItem("userId");
+  let oldName = localStorage.getItem("name");
+  let oldEmail = localStorage.getItem("email");
 
+  useEffect(() => {
+    setName(oldName);
+    setEmail(oldEmail);
+  }, []);
   const signUpSchema = joi.object({
     name: joi.string().required(),
     email: joi
@@ -22,9 +31,9 @@ function SignUp() {
     password: joi.string().required(),
     passConfirm: joi.string().valid(joi.ref("password")).required(),
   });
-
-  async function signUpHandler(event) {
+  async function updateHandler(event) {
     event.preventDefault();
+   
     setButtonCtt(<loadingData.Component {...loadingData.props} />);
     setDisable(true);
 
@@ -39,66 +48,80 @@ function SignUp() {
     if (validation.error) {
       alert("Confirmação de senha não condiz!");
       setDisable(false);
-      setButtonCtt("Cadastrar");
+      setButtonCtt("Atualizar os dados");
       return;
     }
     try {
-      await axios.post("http://localhost:5000/sign-up", body);
-      navigate("/login");
+      await axios.put(`http://localhost:5000/users/${userId}`, {
+        ...body,
+        oldPassword,
+      });
+      navigate("/profile");
       setDisable(false);
     } catch (error) {
       console.log(error);
       alert(`${error.response.data}`);
       setDisable(false);
-      setButtonCtt("Cadastrar");
+      setButtonCtt("Atualizar os dados");
     }
   }
+
   return (
     <Container>
-      <div>
-        <p>Cadastre-se!</p>
-        <Forms onSubmit={signUpHandler}>
-          <Disabled disabled={disable}>
+      <h1>Alterar meus dados</h1>
+      <Forms onSubmit={updateHandler}>
+        <Disabled disabled={disable}>
+          <input
+            type="text"
+            placeholder="NOME"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            disabled={disable}
+          />
+
+          <input
+            type="text"
+            placeholder="E-MAIL"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={disable}
+          />
+          <input
+            type="password"
+            placeholder="SENHA*"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            disabled={disable}
+          />
+          <input
+            type="password"
+            placeholder="CONFIRMAÇÃO DE SENHA"
+            value={passConfirm}
+            onChange={(e) => setPassConfirm(e.target.value)}
+            required
+            disabled={disable}
+          />
+          <OldPass>
             <input
-              type="text"
-              placeholder="Nome*"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              type="password"
+              placeholder="SENHA ANTIGA"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
               required
               disabled={disable}
             />
-            <input
-              type="text"
-              placeholder="E-mail*"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={disable}
-            />
-            <input
-              type="text"
-              placeholder="Senha*"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={disable}
-            />
-            <input
-              type="text"
-              placeholder="Confirme a senha*"
-              value={passConfirm}
-              onChange={(e) => setPassConfirm(e.target.value)}
-              required
-              disabled={disable}
-            />
-            <button type="submit">{buttonCtt}</button>
-          </Disabled>
-        </Forms>
-        <Linked to={"/login"}>Já tem uma conta? Clique aqui!</Linked>
-      </div>
+          </OldPass>
+          <button type="submit">{buttonCtt}</button>
+        </Disabled>
+      </Forms>
+      <Linked to={"/profile"}>Voltar</Linked>
     </Container>
   );
 }
+
 function Disabled({ disabled, children }) {
   if (disabled) {
     return (
@@ -120,32 +143,22 @@ const loadingData = {
     width: 110,
   },
 };
-
 const Container = styled.div`
   margin: 60px 0;
-  padding: 20px;
-  background-color: #96482b;
+  padding: 57px 30px;
+  color: #878460;
   display: flex;
+  flex-direction: column;
+  font-size: 20px;
   align-items: center;
-  justify-content: center;
-  height: 85vh;
-
-  > div {
-    height: 80%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    box-sizing: border-box;
-    p {
-      font-size: 20px;
-      font-weight: 500;
-      color: #fda279;
-    }
+  h1 {
+    font-weight: 600;
+    padding-bottom: 45px;
   }
 `;
+
 const Forms = styled.form`
+  width: 85%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -156,7 +169,6 @@ const Forms = styled.form`
     border: 2px solid #878460;
     width: 100%;
     height: 58px;
-    background-color: #e7ddc8;
     font-size: 20px;
     margin-bottom: 10px;
     font-weight: 400;
@@ -164,6 +176,7 @@ const Forms = styled.form`
       color: #878460;
       font-family: "Montserrat", sans-serif;
       padding-left: 15px;
+      font-size: 14px;
     }
   }
   button {
@@ -171,7 +184,7 @@ const Forms = styled.form`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    border: 2px solid #878460;
+    border: none;
     width: 100%;
     height: 46px;
     background-color: #96482b;
@@ -180,10 +193,15 @@ const Forms = styled.form`
     font-weight: 700;
   }
 `;
+
 const Linked = styled(Link)`
-  color: #fda279;
+  color: #878460;
   font-size: 14px;
   font-weight: 500;
+  padding-top: 10px;
 `;
-
-export default SignUp;
+const OldPass = styled.div`
+  border-top: 2px solid #878460;
+  box-sizing: border-box;
+  padding-top: 10px;
+`;

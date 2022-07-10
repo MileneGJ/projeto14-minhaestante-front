@@ -1,11 +1,13 @@
 import styled from "styled-components";
-
+import UpdateUser from "./UpdateUser";
+import { useNavigate } from "react-router-dom";
 function UserMenu() {
+    const navigate = useNavigate();
   return (
     <Container>
       <h1>Minha conta</h1>
       <div>
-        <Section>
+        <Section onClick={()=> navigate("/update-user")}>
           Alterar meus dados
           <ion-icon name="arrow-forward-outline"></ion-icon>
         </Section>
@@ -24,16 +26,16 @@ function UserMenu() {
 
 const Container = styled.div`
   margin: 60px 0;
-  padding: 40px 30px;
+  padding: 57px 30px;
   color: #878460;
   display: flex;
   flex-direction: column;
   font-size: 20px;
   h1 {
     font-weight: 600;
-    padding-bottom: 30px;
+    padding-bottom: 45px;
   }
-  ion-icon{
+  ion-icon {
     font-size: 26px;
   }
 `;
