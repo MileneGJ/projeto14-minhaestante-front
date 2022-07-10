@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import UpdateUser from "./UpdateUser";
 import { useNavigate } from "react-router-dom";
+
 function UserMenu() {
   const navigate = useNavigate();
+
   function exit() {
     localStorage.clear();
     navigate("/");
   }
+
   return (
     <Container>
       <h1>Minha conta</h1>

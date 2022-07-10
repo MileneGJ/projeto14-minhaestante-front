@@ -43,7 +43,7 @@ function SignUp() {
       return;
     }
     try {
-      await axios.post("https://apimyshelf.herokuapp.com/sign-up", body);
+      await axios.post("http://localhost:5000/sign-up", body);
       navigate("/login");
       setDisable(false);
     } catch (error) {
@@ -68,7 +68,7 @@ function SignUp() {
               disabled={disable}
             />
             <input
-              type="text"
+              type="email"
               placeholder="E-mail*"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -76,7 +76,7 @@ function SignUp() {
               disabled={disable}
             />
             <input
-              type="text"
+              type="password"
               placeholder="Senha*"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -84,7 +84,7 @@ function SignUp() {
               disabled={disable}
             />
             <input
-              type="text"
+              type="password"
               placeholder="Confirme a senha*"
               value={passConfirm}
               onChange={(e) => setPassConfirm(e.target.value)}
@@ -153,6 +153,7 @@ const Forms = styled.form`
   input {
     box-sizing: border-box;
     border-radius: 5px;
+    padding:0 15px;
     border: 2px solid #878460;
     width: 100%;
     height: 58px;

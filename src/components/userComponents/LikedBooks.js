@@ -10,11 +10,9 @@ function LikedBooks() {
     const [favorites, setFavorites] = useState([])
 
     useEffect(()=>{
-        if(userData.length>0) {
-            console.log(userData)
+        if(userData.token) {
             setFavorites(userData.favorites)
         } else {
-            console.log("nao tem token")
             setAppearFooterLogin(true)
         }
     },[])
@@ -60,6 +58,7 @@ h1{
     font-size: 20px;
     font-weight: 700;
     color: #878460;
+    line-height:60px;
 }
 `
 const BookStyled = styled.div`

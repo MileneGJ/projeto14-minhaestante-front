@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../contexts/userContext";
 
 function LogNewBook() {
-    let userID = 10;
+    const {userData} = useContext(UserContext)
     const navigate = useNavigate();
     const [bookInfo, setBookInfo] = useState({
         title: "",
@@ -20,9 +21,9 @@ function LogNewBook() {
 
   function addBook(e) {
     e.preventDefault();
-    const URL = "https://apimyshelf.herokuapp.com/books";
-    const promise = axios.post(URL, bookInfo);
-    promise.then(() => navigate(`/detach/${userID}`));
+    const URL = "http://localhost:5000/books";
+    const promise = axios.post(URL, {...bookInfo, userID:userData.userId});
+    promise.then(() => navigate(`/detach`));
     promise.catch(handleError);
   }
 

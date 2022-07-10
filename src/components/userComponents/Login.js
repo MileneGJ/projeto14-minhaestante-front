@@ -26,7 +26,7 @@ function Login() {
     };
     try {
       const resp = await axios.post(
-        "https://apimyshelf.herokuapp.com/sign-in",
+        "http://localhost:5000/sign-in",
         body
       );
       setUserData(resp.data);
@@ -127,6 +127,7 @@ const Forms = styled.form`
   input {
     box-sizing: border-box;
     border-radius: 5px;
+    padding:0 15px;
     border: 2px solid #878460;
     width: 100%;
     height: 58px;
