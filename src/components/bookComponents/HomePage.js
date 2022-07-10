@@ -1,49 +1,54 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import BookContext from '../../contexts/bookContext';
+import { useEffect, useContext } from 'react';
+import axios from 'axios';
 
 function HomePage() {
-  const [bookList, setBooklist] = useState([]);
+    const { bookList, setBookList } = useContext(BookContext);
+    useEffect(() => {
+        let URL = 'http://localhost:5000/books'
+        let promise = axios.get(URL)
+        promise.then(response => {
+            setBookList(response.data);
+        })
+        promise.catch(handleError)
+    }, [])
 
-  useEffect(() => {
-    let URL = "http://localhost:5000/books";
-    let promise = axios.get(URL);
-    promise.then((response) => {
-      setBooklist(response.data);
-    });
-    promise.catch(handleError);
-  }, []);
+    function handleError(error) {
+        alert(`${error.response.status} - ${error.response.data}`)
+    }
 
-  function handleError(error) {
-    // alert(`${error.response.status} - ${error.response.data}`)
-  }
+    function Book({ title, image, author, price, bookID }) {
+        return (
+            <Link to={`/book/${bookID}`} style={{ textDecoration: 'none' }}>
+                <BookStyled>
+                    <img src={image} alt="" />
+                    <h2>{title}</h2>
+                    <p>{author}</p>
+                    <p>{price}</p>
+                </BookStyled>
+            </Link>
+        )
+    }
 
-  function Book({ title, image, author }) {
     return (
-      <BookStyled>
-        <img src={image} alt="" />
-        <h2>{title}</h2>
-        <p>{author}</p>
-      </BookStyled>
-    );
-  }
-
-  return (
-    <Container>
-      <Booklisting>
-        {bookList.length > 0
-          ? bookList.map((b, index) => (
-              <Book
-                key={index}
-                title={b.title}
-                image={b.image}
-                author={b.author}
-              />
-            ))
-          : ""}
-      </Booklisting>
-    </Container>
-  );
+        <Container>
+            <Booklisting>
+                {bookList.length > 0 ?
+                    bookList.map((b, index) =>
+                        <Book
+                            key={index}
+                            bookID={b._id}
+                            price={b.price}
+                            title={b.title}
+                            image={b.image}
+                            author={b.author}
+                        />) :
+                    ""}
+            </Booklisting>
+        </Container>
+    )
 }
 
 const Container = styled.div`
