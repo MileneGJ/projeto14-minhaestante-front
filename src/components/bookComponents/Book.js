@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 export default function Book({ title, image, author, price, bookID }) {
     return (
-        <Link to={`/book/${bookID}`} style={{ textDecoration: 'none' }}>
+        <Link to={`/book/${bookID}`} >
             <BookStyled>
                 <img src={image} alt="" />
                 <h2>{title}</h2>

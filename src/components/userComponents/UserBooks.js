@@ -54,6 +54,7 @@ function UserBooks() {
                     {userBooks.map((b, index) =>
                         <Book
                             key={index}
+                            bookID={b._id}
                             title={b.title}
                             image={b.image}
                             author={b.author}

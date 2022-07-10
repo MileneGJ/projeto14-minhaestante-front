@@ -1,24 +1,62 @@
+import axios from "axios";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import BookContext from "../../contexts/bookContext";
+import UserContext from "../../contexts/userContext";
 
 function BookPage() {
-    const { BookID } = useParams()
+    const { BookID } = useParams();
     const { bookList } = useContext(BookContext)
     const book = bookList.filter(b => b._id === BookID)[0]
+    const { userData, setUserData } = useContext(UserContext)
+    
+    
+    function verifyLike () {
+        let isBookFavorite
+        if(userData.token){
+            isBookFavorite = userData.favorites.filter(f => f._id === BookID)
+            if(isBookFavorite.length>0){
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+    
+    function verifyCart () {
+        let isBookOnCart 
+        if(userData.token){
+            isBookOnCart = userData.cart.filter(f => f._id === BookID)
+            if(isBookOnCart.length>0){
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
 
     function addToCart(){
-
+        const URL = `http://localhost:5000/users/cart/${userData.userId}`
+        const promise = axios.post(URL,book)
+        promise.then(response=>setUserData(response.data))
+        promise.catch(error=>alert(error.response.data))  
     }
 
     function addToFavorites() {
-        
+        const URL = `http://localhost:5000/users/favorites/${userData.userId}`
+        const promise = axios.post(URL,book)
+        promise.then(response=>setUserData(response.data))
+        promise.catch(error=>alert(error.response.data))        
     }
 
 
     return (
-        <Container>
+        <Container liked={verifyLike()} isOnCart={verifyCart()} >
                 <h1>{book.title}</h1>
                 <div>
                     <ion-icon onClick={addToFavorites} name="heart"></ion-icon>
@@ -59,6 +97,12 @@ ion-icon{
     font-size:26px;
     color:#878460;
     margin:10px;
+}
+ion-icon[name="heart"]{
+    color:${({liked})=>liked?'red':'#878460'};
+}
+ion-icon[name="cart"]{
+    color:${({isOnCart})=>isOnCart?'blue':'#878460'};
 }
 ul{
     color:#878460;
