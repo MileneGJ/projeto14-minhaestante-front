@@ -7,7 +7,7 @@ function Cart () {
 }
 
 const Container = styled.div`
-margin-top:70px;
+margin:60px  0;
 padding:20px;
 `
 

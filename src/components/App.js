@@ -10,14 +10,11 @@ import SignUp from "./userComponents/SignUp";
 import LikedBooks from "./userComponents/LikedBooks";
 import UserMenu from "./userComponents/UserMenu";
 import LogNewBook from "./bookComponents/LogNewBook";
-import GlobalStyle from "./GlobalStyle";
 
 function App() {
   return (
     <BrowserRouter>
-      <GlobalStyle />
       <Header />
-      <Footer />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
@@ -29,6 +26,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<UserMenu />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

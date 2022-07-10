@@ -88,22 +88,24 @@ const loadingData = {
 };
 
 const Container = styled.div`
-  margin-top: 70px;
+  margin: 60px 0;
   padding: 20px;
   background-color: #96482b;
-  height: 100vh;
   display: flex;
   align-items: center;
+  height: 85vh;
   justify-content: center;
   > div {
-    height: 40%;
+    height: 60%;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    margin: 20% 0 45%;
+    margin: 30px;
     p {
+      font-size: 20px;
+      font-weight: 500;
       color: #fda279;
     }
   }
@@ -147,7 +149,7 @@ const Forms = styled.form`
 const Linked = styled(Link)`
   color: #fda279;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 export default Login;
