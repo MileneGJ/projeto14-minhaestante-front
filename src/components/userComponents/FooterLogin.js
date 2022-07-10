@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Bars } from "react-loader-spinner";
 import axios from "axios";
 import FooterSignUp from "./FooterSignUp";
+import UserContext from "../../contexts/userContext";
 
-function FooterLogin() {
+function FooterLogin({show}) {
   const [appearFooterSignUp, setAppearFooterSignUp] = useState(false)
+  const {setUserData} = useContext(UserContext)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,11 +29,15 @@ function FooterLogin() {
         "http://localhost:5000/sign-in",
         body
       );
+
+      setUserData(resp.data)
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("userId", resp.data.userId);
       localStorage.setItem("name", resp.data.name);
       localStorage.setItem("email", resp.data.email);
       setDisable(false);
+      show(false);
+      
     } catch (error) {
       console.log(error);
       alert(error.response.data);

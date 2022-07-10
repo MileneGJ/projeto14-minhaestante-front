@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import axios from "axios";
 import FooterLogin from "./FooterLogin";
+import Book from "../bookComponents/Book";
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../contexts/userContext";
@@ -28,23 +29,37 @@ function UserBooks() {
         alert(`${error.response.status} - ${error.response.data}`)
     }
 
-    function Book({ title, image, author }) {
-        return (
-            <BookStyled>
-                <img src={image} alt="" />
-                <h2>{title}</h2>
-                <p>{author}</p>
-            </BookStyled>
-        )
-    }
 
     function AddNewBook() {
         return (
             <>
                 <h2>Você ainda não desapegou <br /> de nenhum livro</h2>
-                <Link style={{ textDecoration: "none" }} to="/new-detach">
+                <Link to="/new-detach">
                     <button>Adicione seu primeiro desapego</button>
                 </Link>
+            </>
+        )
+    }
+
+    function BookList() {
+        return (
+            <>
+                <span>
+                    <h1>Meus desapegos</h1>
+                    <Link to="/new-detach">
+                    <ion-icon name="add-circle"></ion-icon>
+                    </Link>
+                </span>
+                <div>
+                    {userBooks.map((b, index) =>
+                        <Book
+                            key={index}
+                            title={b.title}
+                            image={b.image}
+                            author={b.author}
+                            price={b.price}
+                        />)}
+                </div>
             </>
         )
     }
@@ -52,17 +67,12 @@ function UserBooks() {
     return (
         <Container>
             <div style={{ display: appearFooterLogin ? 'flex' : 'none' }}>
-                <FooterLogin />
+                <FooterLogin show={setAppearFooterLogin} />
             </div>
-            <BookstoSell>
+            <BookstoSell hasList={userBooks.length > 0 ? "s" : "n"}>
                 {userBooks.length > 0 ?
-                    userBooks.map((b, index) =>
-                        <Book
-                            key={index}
-                            title={b.title}
-                            image={b.image}
-                            author={b.author}
-                        />) :
+                    <BookList />
+                    :
                     <AddNewBook />}
             </BookstoSell>
         </Container>
@@ -70,19 +80,48 @@ function UserBooks() {
 }
 
 const Container = styled.div`
-margin:60px  0;
+margin:60px 0;
 padding:20px;
 box-sizing:border-box;
 `
 
 const BookstoSell = styled.div`
+width:100%;
 display:flex;
 flex-direction:column;
-align-items:center;
-justify-content:center;
+align-items:${({ hasList }) => hasList === "s" ? 'flex-start' : 'center'};
+justify-content:${({ hasList }) => hasList === "s" ? 'flex-start' : 'center'};
 height:60vh;
 
-h2{
+>div{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+span{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 10px;
+    box-sizing:border-box;
+    
+    h1{
+    margin:30px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #878460;
+    line-height:60px;
+    }
+}
+
+ion-icon{
+    font-size:30px;
+    color: #878460;
+}
+
+>h2{
     color:#878460;
     font-size:20px;
     line-height:30px;
@@ -99,28 +138,6 @@ button{
     font-weight:700;
     color:#E7DDC8;
     font-size:16px;
-}
-`
-
-const BookStyled = styled.div`
-width:140px;
-height:180px;
-overflow:hidden;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-img{
-    height:110px;
-}
-h2{
-    color:#878460;
-    font-weight:700;
-    font-size:20px;
-    line-height:30px;
-}
-p{
-    color:#878460;
 }
 `
 
