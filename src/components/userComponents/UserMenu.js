@@ -11,7 +11,7 @@ function UserMenu() {
           Alterar meus dados
           <ion-icon name="arrow-forward-outline"></ion-icon>
         </Section>
-        <Section>
+        <Section onClick={()=>navigate("/delete-user")}>
           Deletar minha conta
           <ion-icon name="arrow-forward-outline"></ion-icon>
         </Section>

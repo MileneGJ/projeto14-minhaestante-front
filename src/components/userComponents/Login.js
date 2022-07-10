@@ -21,7 +21,7 @@ function Login() {
     };
     try {
       const resp = await axios.post(
-        "http://localhost:5000/sign-in",
+        "https://apimyshelf.herokuapp.com/sign-in",
         body
       );
       localStorage.setItem("token", resp.data.token);
@@ -113,7 +113,7 @@ const Container = styled.div`
   }
 `;
 const Forms = styled.form`
-  width: 85%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

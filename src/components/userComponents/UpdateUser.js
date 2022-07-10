@@ -52,7 +52,7 @@ export default function UpdateUser() {
       return;
     }
     try {
-      await axios.put(`http://localhost:5000/users/${userId}`, {
+      await axios.put(`https://apimyshelf.herokuapp.com/users/${userId}`, {
         ...body,
         oldPassword,
       });
@@ -169,7 +169,6 @@ const Forms = styled.form`
     border: 2px solid #878460;
     width: 100%;
     height: 58px;
-    font-size: 20px;
     margin-bottom: 10px;
     font-weight: 400;
     &::placeholder {
@@ -204,4 +203,5 @@ const OldPass = styled.div`
   border-top: 2px solid #878460;
   box-sizing: border-box;
   padding-top: 10px;
+  width: 100%;
 `;

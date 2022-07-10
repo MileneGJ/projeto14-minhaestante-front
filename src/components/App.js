@@ -21,6 +21,7 @@ import UserMenu from "./userComponents/UserMenu";
 import FooterSignUp from "./userComponents/FooterSignUp";
 import FooterLogin from "./userComponents/FooterLogin";
 import UpdateUser from "./userComponents/UpdateUser";
+import DeleteUser from "./userComponents/DeleteUser";
 
 function App() {
   let [userData, setUserData] = useState({});
@@ -49,6 +50,7 @@ function App() {
               <Route path="/footer-sign-up" element={<FooterSignUp />} />
               <Route path="/footer-login" element={<FooterLogin />} />
               <Route path="/update-user" element={<UpdateUser/>}/>
+              <Route path="/delete-user" element={<DeleteUser/>}/>
             </Routes>
             <Footer />
           </BrowserRouter>
