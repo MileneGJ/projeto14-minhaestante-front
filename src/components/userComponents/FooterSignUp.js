@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Bars } from "react-loader-spinner";
 import axios from "axios";
 import joi from "joi";
-function SignUp() {
+function FooterSignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -44,7 +44,7 @@ function SignUp() {
     }
     try {
       await axios.post("https://apimyshelf.herokuapp.com/sign-up", body);
-      navigate("/login");
+      navigate("/footer-login");
       setDisable(false);
     } catch (error) {
       console.log(error);
@@ -94,7 +94,7 @@ function SignUp() {
             <button type="submit">{buttonCtt}</button>
           </Disabled>
         </Forms>
-        <Linked to={"/login"}>Já tem uma conta? Clique aqui!</Linked>
+        <Linked to={"/footer-login"}>Já tem uma conta? Clique aqui!</Linked>
       </div>
     </Container>
   );
@@ -124,24 +124,22 @@ const loadingData = {
 const Container = styled.div`
   margin: 60px 0;
   padding: 20px;
-  background-color: #96482b;
+  background-color: #00000083;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 85vh;
-  /* position: fixed; */
-  /* bottom: 0; */
-  /* width: 100%; */
-  /* height: 450px; */
-  /* border-radius: 40px 40px 0 0; */
   > div {
-    height: 80%;
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    box-sizing: border-box;
+    position: fixed;
+    bottom: 60px;
+    width: 100%;
+    height: 450px;
+    border-radius: 40px 40px 0 0;
+    background-color: #96482b;
     p {
       font-size: 20px;
       font-weight: 500;
@@ -191,4 +189,4 @@ const Linked = styled(Link)`
   font-weight: 500;
 `;
 
-export default SignUp;
+export default FooterSignUp;

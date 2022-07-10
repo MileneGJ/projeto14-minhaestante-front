@@ -10,7 +10,8 @@ import SignUp from "./userComponents/SignUp";
 import LikedBooks from "./userComponents/LikedBooks";
 import UserMenu from "./userComponents/UserMenu";
 import LogNewBook from "./bookComponents/LogNewBook";
-
+import FooterSignUp from "./userComponents/FooterSignUp";
+import FooterLogin from "./userComponents/FooterLogin";
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +26,8 @@ function App() {
         <Route path="/favorites/:userID" element={<LikedBooks />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<UserMenu />} />
+        <Route path="/footer-sign-up" element={<FooterSignUp />} />
+        <Route path="/footer-login" element={<FooterLogin />} />
       </Routes>
       <Footer />
     </BrowserRouter>
