@@ -2,20 +2,24 @@ import styled from "styled-components";
 import UpdateUser from "./UpdateUser";
 import { useNavigate } from "react-router-dom";
 function UserMenu() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  function exit() {
+    localStorage.clear();
+    navigate("/");
+  }
   return (
     <Container>
       <h1>Minha conta</h1>
       <div>
-        <Section onClick={()=> navigate("/update-user")}>
+        <Section onClick={() => navigate("/update-user")}>
           Alterar meus dados
           <ion-icon name="arrow-forward-outline"></ion-icon>
         </Section>
-        <Section onClick={()=>navigate("/delete-user")}>
+        <Section onClick={() => navigate("/delete-user")}>
           Deletar minha conta
           <ion-icon name="arrow-forward-outline"></ion-icon>
         </Section>
-        <Section>
+        <Section onClick={exit}>
           Sair
           <ion-icon name="arrow-forward-outline"></ion-icon>
         </Section>

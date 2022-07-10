@@ -29,7 +29,10 @@ export default function DeleteUser() {
     setDisable(true);
 
     try {
-      await axios.delete(`https://apimyshelf.herokuapp.com/users/${userId}`, config);
+      await axios.delete(
+        `https://apimyshelf.herokuapp.com/users/${userId}`,
+        config
+      );
       navigate("/");
       setDisable(false);
     } catch (error) {
@@ -47,21 +50,23 @@ export default function DeleteUser() {
         Tem certeza que quer <br />
         deixar nossa plataforma?
       </p>
-      <Disabled disabled={disable}>
-        <KeepAccount onClick={() => navigate("/profile")}>
-          Não, continuar na comunidade
-        </KeepAccount>
-        <DeleteAccount onClick={deleteHandler}>{buttonCtt}</DeleteAccount>
-        <Pass>
-          <input
-            type="password"
-            placeholder="SENHA"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            disabled={disable}
-          />
-        </Pass>
-      </Disabled>
+      <div>
+        <Disabled disabled={disable}>
+          <KeepAccount onClick={() => navigate("/profile")}>
+            Não, continuar na comunidade
+          </KeepAccount>
+          <DeleteAccount onClick={deleteHandler}>{buttonCtt}</DeleteAccount>
+          <Pass>
+            <input
+              type="password"
+              placeholder="SENHA"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={disable}
+            />
+          </Pass>
+        </Disabled>
+      </div>
     </Container>
   );
 }
@@ -107,6 +112,9 @@ const Container = styled.div`
   }
   button {
     margin: 10px 0;
+  }
+  >div{
+    width: 100%;
   }
 `;
 
