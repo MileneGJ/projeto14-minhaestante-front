@@ -6,6 +6,7 @@ import logo from '../../assets/images/logo.png';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
 function Header() {
   let navigate = useNavigate();
   const { setSearchBookList } = useContext(SearchBookContext);
@@ -74,7 +75,7 @@ function Header() {
 const HeaderStyled = styled.div`
 width:100%;
 z-index:1;
-height:70px;
+height:60px;
 background-color:#96482B;
 position:fixed;
 padding-right:20px;
@@ -108,10 +109,11 @@ button{
   border:none;
 }
 
-img{
-  height:60px;
-}
-`
+  img {
+    height: 60px;
+    margin-left: 16px;
+  }
+`;
 
 const GenreList = styled.div`
 position:fixed;

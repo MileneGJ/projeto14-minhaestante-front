@@ -41,10 +41,10 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 
-ion-icon{
-    color:#FDA279;
-    font-size:26px;
-}
-`
+  ion-icon {
+    color: #fda279;
+    font-size: 26px;
+  }
+`;
 
-export default Footer
+export default Footer;

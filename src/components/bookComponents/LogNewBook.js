@@ -18,17 +18,17 @@ function LogNewBook() {
         pages:""
     })
 
-    function addBook(e) {
-        e.preventDefault();
-        const URL = "http://localhost:5000/books";
-        const promise = axios.post(URL, bookInfo);
-        promise.then(() => navigate(`/detach/${userID}`));
-        promise.catch(handleError)
-    }
+  function addBook(e) {
+    e.preventDefault();
+    const URL = "http://localhost:5000/books";
+    const promise = axios.post(URL, bookInfo);
+    promise.then(() => navigate(`/detach/${userID}`));
+    promise.catch(handleError);
+  }
 
-    function handleError(error) {
-        alert(`${error.response.status} - ${error.response.data}`)
-    }
+  function handleError(error) {
+    alert(`${error.response.status} - ${error.response.data}`);
+  }
 
     function showField(field) {
         switch (field) {
@@ -54,6 +54,7 @@ function LogNewBook() {
                 return "";
         }
     }
+  
 
     function modifyField(e, field) {
         switch (field) {
@@ -88,6 +89,7 @@ function LogNewBook() {
                 break;
         }
     }
+  
 
 
     return (
@@ -107,11 +109,11 @@ function LogNewBook() {
             </form>
         </Container>
     )
-}
+    }
 
 const Container = styled.div`
-margin-top:90px;
-padding:20px;
+  margin: 60px  0;
+  padding: 20px;
 
 h1{
     color:#878460;
@@ -149,7 +151,29 @@ button{
     font-weight:700;
 }
 
-`
+  input {
+    padding: 0 10px;
+    box-sizing: border-box;
+    background-color: transparent;
+    border: 1px solid #878460;
+    border-radius: 5px;
+    width: 100%;
+    height: 30px;
+    color: #878460;
+    font-size: 16px;
+    margin: 5px 0;
+  }
 
+  button {
+    margin: 20px 0;
+    height: 40px;
+    width: 200px;
+    background-color: #878460;
+    border: none;
+    border-radius: 5px;
+    color: #e7ddc8;
+    font-size: 16px;
+  }
+`;
 
-export default LogNewBook
+export default LogNewBook;

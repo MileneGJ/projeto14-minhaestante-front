@@ -52,39 +52,39 @@ function HomePage() {
 }
 
 const Container = styled.div`
-margin:110px 0;
-padding:20px;
-`
+  margin: 60px 0;
+  padding: 20px;
+`;
 
 const Booklisting = styled.div`
-width:100%;
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
 
 const BookStyled = styled.div`
-width:140px;
-height:200px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-img{
-    height:110px;
-}
-h2{
-    margin:8px 0;
-    color:#878460;
-    font-weight:700;
-    font-size:20px;
-    line-height:22px;
-    text-align:center;
-}
-p{
-    color:#878460;
-}
-`
+  width: 140px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  img {
+    height: 110px;
+  }
+  h2 {
+    margin: 8px 0;
+    color: #878460;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+  }
+  p {
+    color: #878460;
+  }
+`;
 
-export default HomePage
+export default HomePage;

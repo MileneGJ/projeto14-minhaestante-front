@@ -40,7 +40,7 @@ function BookPage() {
 }
 
 const Container = styled.div`
-margin:110px 0;
+margin:60px  0;
 padding:20px;
 box-sizing:border-box;
 display:flex;

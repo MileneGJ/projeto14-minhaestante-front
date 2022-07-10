@@ -59,7 +59,7 @@ function AddNewBook () {
 }
 
 const Container = styled.div`
-margin-top:110px;
+margin:60px  0;
 padding:20px;
 `
 
