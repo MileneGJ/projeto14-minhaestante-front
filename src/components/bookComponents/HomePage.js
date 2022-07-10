@@ -7,7 +7,7 @@ import axios from 'axios';
 function HomePage() {
     const { bookList, setBookList } = useContext(BookContext);
     useEffect(() => {
-        let URL = 'http://localhost:5000/books'
+        let URL = 'https://apimyshelf.herokuapp.com/books'
         let promise = axios.get(URL)
         promise.then(response => {
             setBookList(response.data);

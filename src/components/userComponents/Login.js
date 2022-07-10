@@ -25,7 +25,9 @@ function Login() {
         body
       );
       localStorage.setItem("token", resp.data.token);
+      localStorage.setItem("userId", resp.data.userId);
       localStorage.setItem("name", resp.data.name);
+      localStorage.setItem("email", resp.data.email);
       navigate("/");
       setDisable(false);
     } catch (error) {
@@ -111,7 +113,7 @@ const Container = styled.div`
   }
 `;
 const Forms = styled.form`
-  width: 85%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
