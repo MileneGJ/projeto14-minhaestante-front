@@ -66,7 +66,7 @@ const Container = styled.div`
     color: #878460;
     line-height: 60px;
   }
-  div {
+  >div {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

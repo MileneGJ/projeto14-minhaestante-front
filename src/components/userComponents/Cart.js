@@ -38,9 +38,10 @@ function Cart() {
   }, []);
 
   function handleError(error) {
-    alert(`${error.response.status} - ${error.response.data}`);
     if (error.response.status === 401) {
       navigate("/login");
+    } else {
+      alert(`${error.response.status} - ${error.response.data}`);
     }
   }
 
