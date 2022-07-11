@@ -44,7 +44,7 @@ function FooterSignUp({ show }) {
     try {
       await axios.post("https://apimyshelf.herokuapp.com/sign-up", body);
       setDisable(true);
-      show(false)
+      show(false);
     } catch (error) {
       console.log(error);
       alert(`${error.response.data}`);
@@ -134,13 +134,6 @@ const Container = styled.div`
   width: 100%;
   border-radius: 40px 40px 0 0;
   background-color: #96482b;
- 
-  p {
-    font-size: 20px;
-    font-weight: 500;
-    color: #fda279;
-    margin-top: 20px;
-  }
 `;
 const Forms = styled.form`
   width: 85%;

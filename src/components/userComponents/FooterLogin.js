@@ -126,6 +126,7 @@ const Container = styled.div`
       font-size: 18px;
       font-weight: 500;
       color: #fda279;
+      margin: 20px 0;
     }
   }
 `;

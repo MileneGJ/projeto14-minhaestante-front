@@ -152,6 +152,8 @@ const Container = styled.div`
   }
   span {
     padding-bottom: 20px;
+    color: #666966;
+
   }
   ion-icon {
     font-size: 40px;
@@ -173,12 +175,3 @@ const PixIcon = styled.svg`
   fill: ${(props) => (props.status ? "#878460" : "#666966")};
 `;
 
-// const Card = styled.svg`
-//   color: ${(props) => (props.status ? "#878460" : "#666966")};
-// `;
-// const Ticket = styled.svg`
-//   color: ${(props) => (props.status ? "#878460" : "#666966")};
-// `;
-// const PayPal = styled.svg`
-//   color: ${(props) => (props.status ? "#878460" : "#666966")};
-// `;

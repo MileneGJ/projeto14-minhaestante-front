@@ -59,11 +59,14 @@ export default function UpdateUser() {
       return;
     }
     try {
-      await axios.put(`https://apimyshelf.herokuapp.com/users/${userId}`, {
-        ...body,
-        oldPassword,
-        config,
-      });
+      await axios.put(
+        `https://apimyshelf.herokuapp.com/users/${userId}`,
+        {
+          ...body,
+          oldPassword,
+        },
+        config
+      );
       navigate("/profile");
       setDisable(false);
     } catch (error) {
