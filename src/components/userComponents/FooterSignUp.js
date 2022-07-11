@@ -4,8 +4,7 @@ import { Bars } from "react-loader-spinner";
 import axios from "axios";
 import joi from "joi";
 
-function FooterSignUp({show}) {
-
+function FooterSignUp({ show }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -43,8 +42,9 @@ function FooterSignUp({show}) {
       return;
     }
     try {
-      await axios.post("http://localhost:5000/sign-up", body);
-      setDisable(false);
+      await axios.post("https://apimyshelf.herokuapp.com/sign-up", body);
+      setDisable(true);
+      show(false)
     } catch (error) {
       console.log(error);
       alert(`${error.response.data}`);
@@ -54,45 +54,51 @@ function FooterSignUp({show}) {
   }
   return (
     <Container>
-        <p>Cadastre-se!</p>
-        <Forms onSubmit={signUpHandler}>
-          <Disabled disabled={disable}>
-            <input
-              type="text"
-              placeholder="Nome*"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              disabled={disable}
-            />
-            <input
-              type="text"
-              placeholder="E-mail*"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={disable}
-            />
-            <input
-              type="text"
-              placeholder="Senha*"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={disable}
-            />
-            <input
-              type="text"
-              placeholder="Confirme a senha*"
-              value={passConfirm}
-              onChange={(e) => setPassConfirm(e.target.value)}
-              required
-              disabled={disable}
-            />
-            <button type="submit">{buttonCtt}</button>
-          </Disabled>
-        </Forms>
-        <Linked onClick={()=>{show(false)}} >Já tem uma conta? Clique aqui!</Linked>
+      <p>Cadastre-se!</p>
+      <Forms onSubmit={signUpHandler}>
+        <Disabled disabled={disable}>
+          <input
+            type="text"
+            placeholder="Nome*"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            disabled={disable}
+          />
+          <input
+            type="text"
+            placeholder="E-mail*"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={disable}
+          />
+          <input
+            type="password"
+            placeholder="Senha*"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            disabled={disable}
+          />
+          <input
+            type="password"
+            placeholder="Confirme a senha*"
+            value={passConfirm}
+            onChange={(e) => setPassConfirm(e.target.value)}
+            required
+            disabled={disable}
+          />
+          <button type="submit">{buttonCtt}</button>
+        </Disabled>
+      </Forms>
+      <Linked
+        onClick={() => {
+          show(false);
+        }}
+      >
+        Já tem uma conta? Clique aqui!
+      </Linked>
     </Container>
   );
 }
@@ -119,21 +125,22 @@ const loadingData = {
 };
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    position: fixed;
-    bottom: 60px;
-    width: 100%;
-    height: 450px;
-    border-radius: 40px 40px 0 0;
-    background-color: #96482b;
-    p {
-      font-size: 20px;
-      font-weight: 500;
-      color: #fda279;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 60px;
+  width: 100%;
+  height: 400px;
+  border-radius: 40px 40px 0 0;
+  background-color: #96482b;
+  p {
+    font-size: 20px;
+    font-weight: 500;
+    color: #fda279;
+    margin-top: 20px;
+  }
 `;
 const Forms = styled.form`
   width: 85%;
@@ -146,7 +153,7 @@ const Forms = styled.form`
     border-radius: 5px;
     border: 2px solid #878460;
     width: 100%;
-    height: 58px;
+    height: 50px;
     background-color: #e7ddc8;
     font-size: 20px;
     margin-bottom: 10px;
@@ -156,6 +163,13 @@ const Forms = styled.form`
       font-family: "Montserrat", sans-serif;
       padding-left: 15px;
     }
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
   }
   button {
     display: flex;

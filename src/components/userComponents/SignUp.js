@@ -43,7 +43,7 @@ function SignUp() {
       return;
     }
     try {
-      await axios.post("http://localhost:5000/sign-up", body);
+      await axios.post("https://apimyshelf.herokuapp.com/sign-up", body);
       navigate("/login");
       setDisable(false);
     } catch (error) {
@@ -153,7 +153,7 @@ const Forms = styled.form`
   input {
     box-sizing: border-box;
     border-radius: 5px;
-    padding:0 15px;
+    padding: 0 15px;
     border: 2px solid #878460;
     width: 100%;
     height: 58px;
@@ -166,6 +166,13 @@ const Forms = styled.form`
       font-family: "Montserrat", sans-serif;
       padding-left: 15px;
     }
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
   }
   button {
     display: flex;

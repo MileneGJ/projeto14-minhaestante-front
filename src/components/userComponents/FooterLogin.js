@@ -5,9 +5,9 @@ import axios from "axios";
 import FooterSignUp from "./FooterSignUp";
 import UserContext from "../../contexts/userContext";
 
-function FooterLogin({show}) {
-  const [appearFooterSignUp, setAppearFooterSignUp] = useState(false)
-  const {setUserData} = useContext(UserContext)
+function FooterLogin({ show }) {
+  const [appearFooterSignUp, setAppearFooterSignUp] = useState(false);
+  const { setUserData } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,34 +26,32 @@ function FooterLogin({show}) {
     };
     try {
       const resp = await axios.post(
-        "http://localhost:5000/sign-in",
+        "https://apimyshelf.herokuapp.com/sign-in",
         body
       );
 
-      setUserData(resp.data)
+      setUserData(resp.data);
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("userId", resp.data.userId);
       localStorage.setItem("name", resp.data.name);
       localStorage.setItem("email", resp.data.email);
-      setDisable(false);
+      setDisable(true);
       show(false);
-      
     } catch (error) {
       console.log(error);
-      alert(error.response.data);
+      console.log(error.response.data);
       setDisable(false);
       setButtonCtt("Entrar");
     }
   }
 
-
-  function appearSignUp () {
-    setAppearFooterSignUp(true)
+  function appearSignUp() {
+    setAppearFooterSignUp(true);
   }
 
   return (
     <Container>
-      <div  style={{display:appearFooterSignUp?'none':'flex'}}>
+      <div style={{ display: appearFooterSignUp ? "none" : "flex" }}>
         <p>Conecte-se à sua conta!</p>
         <Forms onSubmit={signInHandler}>
           <Disabled disabled={disable}>
@@ -76,9 +74,13 @@ function FooterLogin({show}) {
             <button type="submit">{buttonCtt}</button>
           </Disabled>
         </Forms>
-        <Linked onClick={appearSignUp}>Ainda não tem cadastro? Clique aqui!</Linked>
+        <Linked onClick={appearSignUp}>
+          Ainda não tem cadastro? Clique aqui!
+        </Linked>
       </div>
-      <div style={{display:appearFooterSignUp?'flex':'none'}} ><FooterSignUp show={setAppearFooterSignUp} /> </div>
+      <div style={{ display: appearFooterSignUp ? "flex" : "none" }}>
+        <FooterSignUp show={setAppearFooterSignUp} />{" "}
+      </div>
     </Container>
   );
 }
@@ -105,18 +107,14 @@ const loadingData = {
 };
 
 const Container = styled.div`
-position:fixed;
-top:60px;
-left:0;
-display:flex;
-flex-direction:column;
-justify-content:flex-end;
-width:100%;
-height:100vh;
-background-color: rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   > div {
     display: flex;
-    margin-bottom:110px;
+    position: fixed;
+    bottom: 50px;
+    left: 0;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
@@ -152,6 +150,13 @@ const Forms = styled.form`
       font-family: "Montserrat", sans-serif;
       padding-left: 15px;
     }
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
   }
   button {
     display: flex;

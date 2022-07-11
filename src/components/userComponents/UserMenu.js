@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../../contexts/userContext";
 
 function UserMenu() {
   const navigate = useNavigate();
-
+  const { setUserData } = useContext(UserContext);
   function exit() {
     localStorage.clear();
+    setUserData("")
     navigate("/");
   }
 

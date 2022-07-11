@@ -24,7 +24,7 @@ function Cart() {
 
     function goToConfirm() {
         try {
-            const URL = `localhost:5000/users/bought/${userData.userId}`
+            const URL = `https://apimyshelf.herokuapp.com/users/bought/${userData.userId}`
             const promise = axios.post(URL, userData.cart)
             promise.then(response =>
                 setUserData(response.data)

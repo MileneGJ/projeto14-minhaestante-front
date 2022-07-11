@@ -21,7 +21,7 @@ function LogNewBook() {
 
   function addBook(e) {
     e.preventDefault();
-    const URL = "http://localhost:5000/books";
+    const URL = "https://apimyshelf.herokuapp.com/books";
     const promise = axios.post(URL, {...bookInfo, userID:userData.userId});
     promise.then(() => navigate(`/detach`));
     promise.catch(handleError);

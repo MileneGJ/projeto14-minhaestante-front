@@ -5,16 +5,15 @@ import { useState, useContext } from "react";
 import { Bars } from "react-loader-spinner";
 import axios from "axios";
 
-
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {setUserData} = useContext(UserContext)
+  const { setUserData } = useContext(UserContext);
 
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
   const [buttonCtt, setButtonCtt] = useState("Entrar");
-  
+
   async function signInHandler(event) {
     event.preventDefault();
     setButtonCtt(<loadingData.Component {...loadingData.props} />);
@@ -22,18 +21,18 @@ function Login() {
 
     let body = {
       email,
-      password
+      password,
     };
     try {
       const resp = await axios.post(
-        "http://localhost:5000/sign-in",
+        "https://apimyshelf.herokuapp.com/sign-in",
         body
       );
-      setUserData(resp.data);
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("userId", resp.data.userId);
       localStorage.setItem("name", resp.data.name);
       localStorage.setItem("email", resp.data.email);
+      setUserData(resp.data);
       navigate("/");
       setDisable(false);
     } catch (error) {
@@ -127,7 +126,7 @@ const Forms = styled.form`
   input {
     box-sizing: border-box;
     border-radius: 5px;
-    padding:0 15px;
+    padding: 0 15px;
     border: 2px solid #878460;
     width: 100%;
     height: 58px;
@@ -140,6 +139,13 @@ const Forms = styled.form`
       font-family: "Montserrat", sans-serif;
       padding-left: 15px;
     }
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
   }
   button {
     display: flex;

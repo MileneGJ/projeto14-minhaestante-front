@@ -42,7 +42,7 @@ function BookPage() {
 
     function addToCart(){
         if(userData.userId){
-            const URL = `http://localhost:5000/users/cart/${userData.userId}`
+            const URL = `https://apimyshelf.herokuapp.com/users/cart/${userData.userId}`
         const config = {
             headers:{
                 Authorization:`Bearer ${token}`
@@ -58,7 +58,7 @@ function BookPage() {
 
     function addToFavorites() {
         if(userData.userId){
-        const URL = `http://localhost:5000/users/favorites/${userData.userId}`
+        const URL = `https://apimyshelf.herokuapp.com/users/favorites/${userData.userId}`
         const config = {
             headers:{
                 Authorization:`Bearer ${token}`
@@ -141,6 +141,7 @@ img{
 }
 button{
     margin-top:40px;
+    margin-bottom: 60px;
     height:40px;
     width:140px;
     background-color:#878460;
