@@ -33,7 +33,14 @@ export default function UpdateUser() {
   });
   async function updateHandler(event) {
     event.preventDefault();
-   
+    let token = localStorage.getItem("token");
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     setButtonCtt(<loadingData.Component {...loadingData.props} />);
     setDisable(true);
 
@@ -55,6 +62,7 @@ export default function UpdateUser() {
       await axios.put(`https://apimyshelf.herokuapp.com/users/${userId}`, {
         ...body,
         oldPassword,
+        config,
       });
       navigate("/profile");
       setDisable(false);

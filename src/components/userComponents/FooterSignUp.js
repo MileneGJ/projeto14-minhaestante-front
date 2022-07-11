@@ -132,9 +132,9 @@ const Container = styled.div`
   position: fixed;
   bottom: 60px;
   width: 100%;
-  height: 400px;
   border-radius: 40px 40px 0 0;
   background-color: #96482b;
+ 
   p {
     font-size: 20px;
     font-weight: 500;

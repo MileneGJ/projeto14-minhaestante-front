@@ -1,169 +1,164 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../../contexts/userContext";
+import PurchaseContext from "../../contexts/purchaseContext";
 import axios from "axios";
+import Checkout from "./Checkout";
 
 function Cart() {
-    const { userData, setUserData } = useContext(UserContext);
-    const [purchaseDetails, setPurchaseDetails] = useState({
-        address: "",
-        total: ""
-    })
+  const { userData, setUserData } = useContext(UserContext);
+  const { purchaseDetails, setPurchaseDetails } = useContext(PurchaseContext);
+  const navigate = useNavigate();
 
-    useEffect(()=>{
-        let sum = 0
-        if(userData.cart.length>0){
-            userData.cart.map(b=>{
-                sum += parseInt(b.price.replace("R$", "").replace(/,/,/\./))
-            })
-        }
-        let formattedTotal = `R$${sum.toFixed(2)}`.replace(/\./,",")
-        setPurchaseDetails({...purchaseDetails, total:formattedTotal})
-    },[])
-
-    function goToConfirm() {
-        try {
-            const URL = `https://apimyshelf.herokuapp.com/users/bought/${userData.userId}`
-            const promise = axios.post(URL, userData.cart)
-            promise.then(response =>
-                setUserData(response.data)
-            )
-        } catch (error) {
-
-        }
+  useEffect(() => {
+    let sum = 0;
+    if (userData.cart.length > 0) {
+      userData.cart.map((b) => {
+        sum += parseInt(b.price.replace("R$", "").replace(/,/, /\./));
+      });
+    } else {
+      navigate("/login");
     }
-    function changeAddress(){
-        let newAddress = prompt('Digite o endereço de entrega:')
-        setPurchaseDetails({...purchaseDetails, address:newAddress}) 
-    }
+    let formattedTotal = `R$${sum.toFixed(2)}`.replace(/\./, ",");
+    setPurchaseDetails({ ...purchaseDetails, total: formattedTotal });
+  }, []);
 
-    function BookToBuy({ bookID, price, title, image, author }) {
-        return (
-            <Link to={`/book/${bookID}`} >
-                <BookInfo>
-                    <div>
-                        <img src={image} alt="" />
-                    </div>
-                    <span>
-                        <h2>{title}</h2>
-                        <p>{author}</p>
-                        <h3>{price}</h3>
-                    </span>
-                </BookInfo>
-            </Link>
-        )
-    }
+  function changeAddress() {
+    let newAddress = prompt("Digite o endereço de entrega:");
+    setPurchaseDetails({ ...purchaseDetails, address: newAddress });
+  }
 
+  function BookToBuy({ bookID, price, title, image, author }) {
     return (
-        <Container>
-            <h1>Meu Carrinho:</h1>
+      <Link to={`/book/${bookID}`}>
+        <BookInfo>
+          <div>
+            <img src={image} alt="" />
+          </div>
+          <span>
+            <h2>{title}</h2>
+            <p>{author}</p>
+            <h3>{price}</h3>
+          </span>
+        </BookInfo>
+      </Link>
+    );
+  }
 
-            {userData.cart?.length > 0 ?
-                <> 
-                <div>
-                    {userData.cart.map((f, index) =>
-                        <BookToBuy
-                            key={index}
-                            bookID={f._id}
-                            price={f.price}
-                            title={f.title}
-                            image={f.image}
-                            author={f.author}
-                        />)}
-                </div>
-                    <div>
-                        <h2>Entregar em:</h2>
-                        <p>{purchaseDetails.address}</p>
-                        <button onClick={changeAddress}>Modificar endereço</button>
-                    </div>
-                    <span>
-                        <h2>VALOR TOTAL:</h2>
-                        <h3>{purchaseDetails.total}</h3>
-                    </span>
-                    <button onClick={goToConfirm}>Finalizar Pedido</button>
-                </>
-                :
-                ""}
+  return (
+    <Container>
+      <h1>Meu Carrinho:</h1>
 
-
-        </Container>
-    )
+      {userData.cart?.length > 0 ? (
+        <>
+          <div>
+            {userData.cart.map((f, index) => (
+              <BookToBuy
+                key={index}
+                bookID={f._id}
+                price={f.price}
+                title={f.title}
+                image={f.image}
+                author={f.author}
+              />
+            ))}
+          </div>
+          <div>
+            <h2>Entregar em:</h2>
+            <p>{purchaseDetails.address}</p>
+            <button onClick={changeAddress}>Modificar endereço</button>
+          </div>
+          <span>
+            <h2>VALOR TOTAL:</h2>
+            <h3>{purchaseDetails.total}</h3>
+          </span>
+          <button onClick={() => navigate("/checkout")}>
+            Finalizar Pedido
+          </button>
+        </>
+      ) : (
+        ""
+      )}
+    </Container>
+  );
 }
 
 const Container = styled.div`
-margin:60px 0;
-padding:20px;
-box-sizing:border-box;
-h1{
+  margin: 60px 0;
+  padding: 20px;
+  box-sizing: border-box;
+  h1 {
     font-size: 20px;
     font-weight: 700;
     color: #878460;
-    line-height:60px;
-}
-button{
-    background-color:#878460;
-    border:none;
-    border-radius:50px;
-    color:#E7DDC8;
-    font-size:16px;
-    font-weight:700;
-    margin:20px 0;
-}
->button:last-child{
-    margin:0;
-    height:40px;
-    width:200px;
-    position:fixed;
-    bottom:80px;
-    left:40%;
-}
-
->span{
-    margin:20px;
-    display:flex;
-    align-items:center;
-}
->span h3{
-    margin:0 10px;
-}
-
-h3{
-    color: #96482B;
-    font-size:18px;
-    font-weight:700;
-    line-height:40px;
+    line-height: 60px;
+  }
+  button {
+    background-color: #878460;
+    border: none;
+    border-radius: 50px;
+    color: #e7ddc8;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 20px 0;
   }
 
-h2 {
+  > button:last-child {
+    margin: 0;
+    height: 40px;
+    width: 200px;
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+
+  }
+
+  > span {
+    margin: 20px 20px 100px;
+    display: flex;
+    align-items: center;
+  }
+  > span h3 {
+    margin: 0 10px;
+  }
+
+  h3 {
+    color: #96482b;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 40px;
+  }
+
+  h2 {
     color: #878460;
     font-weight: 700;
     font-size: 18px;
-    line-height:24px;
+    line-height: 24px;
   }
   p {
     color: #878460;
-    font-size:16px;
+    font-size: 16px;
   }
-`
+`;
 const BookInfo = styled.div`
-display:flex;
+  display: flex;
 
-span{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    justify-content:center;
-}
-div{
-    overflow:hidden;
-    margin:20px;
-    width:140px;
-}
-img {
+  span {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  div {
+    overflow: hidden;
+    margin: 20px;
+    width: 140px;
+  }
+  img {
     width: 110px;
   }
-`
+`;
 
-
-export default Cart
+export default Cart;

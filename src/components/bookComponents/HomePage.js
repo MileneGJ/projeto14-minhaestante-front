@@ -48,6 +48,9 @@ const Booklisting = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  a{
+    margin: 13px 13px;
+  }
 `;
 
 export default HomePage;
