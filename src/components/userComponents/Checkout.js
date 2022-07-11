@@ -29,21 +29,13 @@ export default function Checkout() {
       alert(
         `Sua compra será confirmada mediante pagamento por ${purchaseDetails.payWay}`
       );
-      if (userData.userId) {
-        const URL = `https://apimyshelf.herokuapp.com/users/cart/${userData.userId}`;
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        let body = {};
-        const promise = axios.post(URL, body, config);
-        promise.then((response) => {
-          setUserData(response.data);
-          navigate("/");
-        });
-        promise.catch((error) => alert(error.response.data));
-      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      navigate("/");
     } catch (error) {}
   }
   function clicked() {
