@@ -1,11 +1,19 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "../../contexts/userContext";
 
 function UserMenu() {
   const navigate = useNavigate();
   const { setUserData } = useContext(UserContext);
+  const token = localStorage.getItem("token");
+
+  useEffect(()=>{
+    if(!token){
+      navigate("/login")
+    }
+  },[])
+
   function exit() {
     localStorage.clear();
     setUserData("")

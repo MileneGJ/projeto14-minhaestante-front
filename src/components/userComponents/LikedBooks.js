@@ -1,21 +1,34 @@
 import styled from "styled-components";
 import FooterLogin from "./FooterLogin";
 import Book from "../bookComponents/Book";
-import { useState, useContext, useEffect } from "react";
-import UserContext from "../../contexts/userContext";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function LikedBooks() {
   const [appearFooterLogin, setAppearFooterLogin] = useState(false);
-  const { userData } = useContext(UserContext);
   const [favorites, setFavorites] = useState([]);
+  let userId = localStorage.getItem("userId");
+  let token = localStorage.getItem("token");
+
   useEffect(() => {
-    if (userData.favorites) {
-      setFavorites(userData.favorites);
-    } else {
-      setAppearFooterLogin(true);
-    }
+    const URL = `https://apimyshelf.herokuapp.com/users/favorites/${userId}`;
+    const config = {
+      headers:{
+          Authorization:`Bearer ${token}`
+      }
+  }
+  const promise = axios.get(URL,config);
+  promise.then(response=>setFavorites(response.data))
+  promise.catch(handleError)
   }, []);
 
+  function handleError(error) {
+    if(error.response.status===401){
+        setAppearFooterLogin(true)
+    } else {
+        alert(`${error.response.status} - ${error.response.data}`)
+    }
+}
   return (
     <Container>
       <h1>Lista de desejos</h1>
@@ -33,6 +46,7 @@ function LikedBooks() {
                 title={f.title}
                 image={f.image}
                 author={f.author}
+                status={f.status}
               />
             ))
           : ""}

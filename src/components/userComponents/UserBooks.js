@@ -2,31 +2,35 @@ import styled from "styled-components";
 import axios from "axios";
 import FooterLogin from "./FooterLogin";
 import Book from "../bookComponents/Book";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import UserContext from "../../contexts/userContext";
 
 function UserBooks() {
     const [appearFooterLogin, setAppearFooterLogin] = useState(false)
-    const [userBooks, setUserBooks] = useState([])
-    const { userData } = useContext(UserContext)
+    const [userBooks, setUserBooks] = useState([]);
+    let token = localStorage.getItem("token");
+    let userId = localStorage.getItem("userId");
 
     useEffect(() => {
-        if (userData.token) {
-            const URL = `https://apimyshelf.herokuapp.com/books/?field=userID&keyword=${userData.userId}`;
-            const promise = axios.get(URL)
+            const URL = `https://apimyshelf.herokuapp.com/books/user/${userId}`;
+            const config = {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+            const promise = axios.get(URL,config)
             promise.then(response => {
                 setUserBooks(response.data)
             })
             promise.catch(handleError)
-        } else {
-            setAppearFooterLogin(true)
-        }
-
     }, [])
 
     function handleError(error) {
-        alert(`${error.response.status} - ${error.response.data}`)
+        if(error.response.status===401){
+            setAppearFooterLogin(true)
+        } else {
+            alert(`${error.response.status} - ${error.response.data}`)
+        }
     }
 
 
@@ -59,6 +63,7 @@ function UserBooks() {
                             image={b.image}
                             author={b.author}
                             price={b.price}
+                            status={b.status}
                         />)}
                 </div>
             </>

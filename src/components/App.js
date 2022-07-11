@@ -28,6 +28,7 @@ function App() {
   const [bookList, setBookList] = useState([]);
   const [searchBookList, setSearchBookList] = useState([]);
   const [purchaseDetails, setPurchaseDetails] = useState({
+    productList:[],
     address: "",
     total: "",
     payWay:""

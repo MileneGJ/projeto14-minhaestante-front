@@ -90,12 +90,13 @@ function Header() {
           }}
         ></div>
         <ul>
+          <p onClick={() => {navigate("/login"); setShowMenu(false)}}>Fazer Login</p>
+          <h4> Catálogo: </h4>
           {genres.map((g, index) => (
             <li key={index} onClick={() => searchByGenre(g)}>
               {g}
             </li>
           ))}
-          <p onClick={() => {navigate("/login"); setShowMenu(false)}}>Login</p>
         </ul>
       </GenreList>
     </HeaderStyled>
@@ -173,6 +174,11 @@ const GenreList = styled.div`
   p {
     font-size: 16px;
     font-weight: 700;
+  }
+  h4 {
+    margin:50px 0 20px 0;
+    font-size: 22px;
+    text-decoration:underline;
   }
 `;
 

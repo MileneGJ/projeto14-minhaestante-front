@@ -1,20 +1,30 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import FooterLogin from "../userComponents/FooterLogin";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import BookContext from "../../contexts/bookContext";
 import UserContext from "../../contexts/userContext";
 
 function BookPage() {
   const { BookID } = useParams();
-  const { bookList } = useContext(BookContext);
-  const book = bookList.filter((b) => b._id === BookID)[0];
-  const { userData, setUserData } = useContext(UserContext);
-  let token = localStorage.getItem("token");
+  const [appearFooterLogin, setAppearFooterLogin] = useState(false);
   const navigate = useNavigate();
+  const { userData, setUserData } = useContext(UserContext);
+  const [book, setBook] = useState({});
+  let token = localStorage.getItem("token");
+  let userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const URL = `https://apimyshelf.herokuapp.com/books?field=_id&keyword=${BookID}`;
+    const promise = axios.get(URL);
+    promise.then((response) => setBook(response.data[0]));
+    promise.catch(handleError);
+  }, []);
+
   function verifyLike() {
     let isBookFavorite;
     if (userData.favorites?.length > 0) {
+      console.log(userData.favorites);
       isBookFavorite = userData.favorites.filter((f) => f?._id === BookID);
       if (isBookFavorite.length > 0) {
         return true;
@@ -41,8 +51,8 @@ function BookPage() {
   }
 
   function addToCart() {
-    if (userData.userId) {
-      const URL = `https://apimyshelf.herokuapp.com/users/cart/${userData.userId}`;
+    if (userId) {
+      const URL = `https://apimyshelf.herokuapp.com/users/cart/${userId}`;
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -50,16 +60,15 @@ function BookPage() {
       };
       const promise = axios.post(URL, book, config);
       promise.then((response) => setUserData(response.data));
-      promise.catch((error) => alert(error.response.data));
+      promise.catch(handleError);
     } else {
-        navigate("/login");
-
+      setAppearFooterLogin(true);
     }
   }
 
-  function addToFavorites() {  
-    if (userData.userId) {
-      const URL = `https://apimyshelf.herokuapp.com/users/favorites/${userData.userId}`;
+  function addToFavorites() {
+    if (userId) {
+      const URL = `https://apimyshelf.herokuapp.com/users/favorites/${userId}`;
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -67,11 +76,23 @@ function BookPage() {
       };
       const promise = axios.post(URL, book, config);
       promise.then((response) => setUserData(response.data));
-      promise.catch((error) => alert(error.response.data));
+      promise.catch(handleError);
     } else {
-        navigate("/login");
-
+      setAppearFooterLogin(true);
     }
+  }
+  
+  function handleError(error) {
+    if (error.response.status === 401) {
+      setAppearFooterLogin(true);
+    } else {
+      alert(`${error.response.status} - ${error.response.data}`);
+    }
+  }
+
+  function goToCart() {
+    addToCart();
+    navigate("/cart");
   }
 
   return (
@@ -91,7 +112,12 @@ function BookPage() {
         <li>{`Formato: ${book.type}`}</li>
         <li>{`Páginas: ${book.pages}`}</li>
       </ul>
-      <button onClick={addToCart}>Comprar livro</button>
+      <button className="cartButton" onClick={goToCart}>
+        Comprar livro
+      </button>
+      <div style={{ display: appearFooterLogin ? "flex" : "none" }}>
+        <FooterLogin show={setAppearFooterLogin} />
+      </div>
     </Container>
   );
 }
@@ -139,7 +165,7 @@ const Container = styled.div`
     width: 40vh;
     margin: 20px 0;
   }
-  button {
+  .cartButton {
     margin-top: 40px;
     margin-bottom: 60px;
     height: 40px;

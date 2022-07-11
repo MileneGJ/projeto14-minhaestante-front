@@ -141,6 +141,7 @@ const Forms = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin:10px 0;
   input {
     box-sizing: border-box;
     border-radius: 5px;
@@ -165,9 +166,7 @@ const Forms = styled.form`
     width: 100%;
   }
   button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin:0;
     border-radius: 5px;
     border: 2px solid #878460;
     width: 100%;
