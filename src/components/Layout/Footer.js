@@ -5,7 +5,6 @@ import { useContext } from "react";
 
 function Footer () {
     const {userData} = useContext(UserContext)
-
     return (
         <FooterStyled> 
         <Link to="/">

@@ -119,7 +119,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: space-around;
     width: 100%;
-    height: 300px;
+    height: 350px;
     border-radius: 40px 40px 0 0;
     background-color: #96482b;
     p {
