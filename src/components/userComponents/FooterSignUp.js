@@ -42,7 +42,7 @@ function FooterSignUp({ show }) {
       return;
     }
     try {
-      await axios.post("http://localhost:5000/sign-up", body);
+      await axios.post("https://apimyshelf.herokuapp.com/sign-up", body);
       setDisable(true);
       show(false)
     } catch (error) {

@@ -15,7 +15,7 @@ function BookPage() {
     let userId = localStorage.getItem("userId");
     
 useEffect(()=>{
-   const URL = `http://localhost:5000/books?field=_id&keyword=${BookID}`
+   const URL = `https://apimyshelf.herokuapp.com/books?field=_id&keyword=${BookID}`
    const promise = axios.get(URL);
    promise.then(response=>setBook(response.data[0]))
    promise.catch(handleError)
@@ -52,7 +52,7 @@ useEffect(()=>{
 
     function addToCart(){
         if(userId){
-            const URL = `http://localhost:5000/users/cart/${userId}`
+            const URL = `https://apimyshelf.herokuapp.com/users/cart/${userId}`
         const config = {
             headers:{
                 Authorization:`Bearer ${token}`
@@ -75,7 +75,7 @@ useEffect(()=>{
 
     function addToFavorites() {
         if(userId){
-        const URL = `http://localhost:5000/users/favorites/${userId}`
+        const URL = `https://apimyshelf.herokuapp.com/users/favorites/${userId}`
         const config = {
             headers:{
                 Authorization:`Bearer ${token}`

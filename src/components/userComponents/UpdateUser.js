@@ -59,7 +59,7 @@ export default function UpdateUser() {
       return;
     }
     try {
-      await axios.put(`http://localhost:5000/users/${userId}`, {
+      await axios.put(`https://apimyshelf.herokuapp.com/users/${userId}`, {
         ...body,
         oldPassword,
         config,

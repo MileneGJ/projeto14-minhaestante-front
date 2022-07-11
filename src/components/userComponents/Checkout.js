@@ -16,7 +16,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   function goToConfirm() {
     try {
-      const URL = `http://localhost:5000/users/bought/${userData.userId}`;
+      const URL = `https://apimyshelf.herokuapp.com/users/bought/${userData.userId}`;
       const config = {
         headers:{
             Authorization:`Bearer ${token}`

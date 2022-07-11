@@ -13,7 +13,7 @@ function Cart() {
   let token = localStorage.getItem("token");
 
   useEffect(() => {
-    const URL = `http://localhost:5000/users/cart/${userId}`;
+    const URL = `https://apimyshelf.herokuapp.com/users/cart/${userId}`;
     const config = {
       headers:{
           Authorization:`Bearer ${token}`

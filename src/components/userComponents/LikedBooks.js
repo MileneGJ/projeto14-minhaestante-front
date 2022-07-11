@@ -11,7 +11,7 @@ function LikedBooks() {
   let token = localStorage.getItem("token");
 
   useEffect(() => {
-    const URL = `http://localhost:5000/users/favorites/${userId}`;
+    const URL = `https://apimyshelf.herokuapp.com/users/favorites/${userId}`;
     const config = {
       headers:{
           Authorization:`Bearer ${token}`
