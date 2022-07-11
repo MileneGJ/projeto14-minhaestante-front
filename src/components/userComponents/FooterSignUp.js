@@ -42,7 +42,7 @@ function FooterSignUp({ show }) {
       return;
     }
     try {
-      await axios.post("https://apimyshelf.herokuapp.com/sign-up", body);
+      await axios.post("http://localhost:5000/sign-up", body);
       setDisable(true);
       show(false)
     } catch (error) {
@@ -148,6 +148,7 @@ const Forms = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin:10px 0;
   input {
     box-sizing: border-box;
     border-radius: 5px;
@@ -172,9 +173,7 @@ const Forms = styled.form`
     width: 100%;
   }
   button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin:0;
     border-radius: 5px;
     border: 2px solid #878460;
     width: 100%;

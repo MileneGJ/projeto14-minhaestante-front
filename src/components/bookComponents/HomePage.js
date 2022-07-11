@@ -7,7 +7,7 @@ import axios from 'axios';
 function HomePage() {
     const { bookList, setBookList } = useContext(BookContext);
     useEffect(() => {
-        let URL = 'https://apimyshelf.herokuapp.com/books'
+        let URL = 'http://localhost:5000/books?field=status&keyword=A-venda'
         let promise = axios.get(URL)
         promise.then(response => {
             setBookList(response.data);
@@ -31,6 +31,7 @@ function HomePage() {
                             title={b.title}
                             image={b.image}
                             author={b.author}
+                            status={b.status}
                         />) :
                     ""}
             </Booklisting>

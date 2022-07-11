@@ -1,17 +1,17 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 
-export default function Book({ title, image, author, price, bookID }) {
-    return (
-        <Link to={`/book/${bookID}`} >
-            <BookStyled>
-                <img src={image} alt="" />
-                <h2>{title}</h2>
-                <p>{author}</p>
-                <p>{price}</p>
-            </BookStyled>
-        </Link>
-    )
+export default function Book({ title, image, author, price, bookID, status }) {
+  return (
+    <Link to={`/book/${bookID}`} >
+      <BookStyled statusStyle={status}>
+        <img src={image} alt="" />
+        <h2>{title}</h2>
+        <p>{author}</p>
+        <p>{status === 'A-venda' ? price : 'VENDIDO'}</p>
+      </BookStyled>
+    </Link>
+  )
 }
 
 const BookStyled = styled.div`
@@ -36,5 +36,9 @@ const BookStyled = styled.div`
   p {
     color: #878460;
     font-size:16px;
+  }
+  p:last-child{
+    color:${({ statusStyle }) => statusStyle === 'A-venda' ? '#878460' : 'red' };
+    font-weight:${({ statusStyle }) => statusStyle === 'A-venda' ? '400' : '700' };
   }
 `;

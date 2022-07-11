@@ -1,33 +1,58 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../../contexts/userContext";
 import PurchaseContext from "../../contexts/purchaseContext";
 import axios from "axios";
-import Checkout from "./Checkout";
 
 function Cart() {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData} = useContext(UserContext);
   const { purchaseDetails, setPurchaseDetails } = useContext(PurchaseContext);
   const navigate = useNavigate();
+  let userId = localStorage.getItem("userId");
+  let token = localStorage.getItem("token");
 
   useEffect(() => {
-    let sum = 0;
-    if (userData.cart.length > 0) {
-      userData.cart.map((b) => {
+    const URL = `http://localhost:5000/users/cart/${userId}`;
+    const config = {
+      headers:{
+          Authorization:`Bearer ${token}`
+      }
+  }
+  const promise = axios.get(URL,config);
+  promise.then(response=>{
+  let sum = 0;
+    if (response.data.length > 0) {
+      response.data.map((b) => {
         sum += parseInt(b.price.replace("R$", "").replace(/,/, /\./));
       });
-    } else {
-      navigate("/login");
     }
     let formattedTotal = `R$${sum.toFixed(2)}`.replace(/\./, ",");
-    setPurchaseDetails({ ...purchaseDetails, total: formattedTotal });
+    setPurchaseDetails({ ...purchaseDetails, total: formattedTotal, productList:response.data });
+  })
+  promise.catch(handleError)
   }, []);
+
+  function handleError(error) {
+    alert(`${error.response.status} - ${error.response.data}`);
+    if(error.response.status===401){
+      navigate("/login")
+    }
+  }
 
   function changeAddress() {
     let newAddress = prompt("Digite o endereço de entrega:");
     setPurchaseDetails({ ...purchaseDetails, address: newAddress });
   }
+
+function goToCheckout(){
+  if (purchaseDetails.address?.length===0) {
+    alert("Você precisa adicionar seu endereço no carrinho!");
+  } else {
+    navigate("/checkout")
+  }
+}
+
 
   function BookToBuy({ bookID, price, title, image, author }) {
     return (
@@ -73,7 +98,7 @@ function Cart() {
             <h2>VALOR TOTAL:</h2>
             <h3>{purchaseDetails.total}</h3>
           </span>
-          <button onClick={() => navigate("/checkout")}>
+          <button onClick={goToCheckout}>
             Finalizar Pedido
           </button>
         </>

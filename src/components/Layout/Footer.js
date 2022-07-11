@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import UserContext from "../../contexts/userContext";
-import { useContext } from "react";
 
 function Footer () {
-    const {userData} = useContext(UserContext)
     return (
         <FooterStyled> 
         <Link to="/">
@@ -13,10 +10,10 @@ function Footer () {
         <Link to="/favorites">
             <ion-icon name="heart-outline"></ion-icon>
         </Link>
-        <Link to={userData.token?"/profile":"/login"}>
+        <Link to={"/profile"}>
             <ion-icon name="person-outline"></ion-icon>
         </Link>
-        <Link to={userData.token?"/cart":"/login"}>
+        <Link to={"/cart"}>
             <ion-icon name="cart-outline"></ion-icon>        
         </Link>
         <Link to="/detach">

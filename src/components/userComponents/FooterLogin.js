@@ -26,7 +26,7 @@ function FooterLogin({ show }) {
     };
     try {
       const resp = await axios.post(
-        "https://apimyshelf.herokuapp.com/sign-in",
+        "http://localhost:5000/sign-in",
         body
       );
 
@@ -35,6 +35,9 @@ function FooterLogin({ show }) {
       localStorage.setItem("userId", resp.data.userId);
       localStorage.setItem("name", resp.data.name);
       localStorage.setItem("email", resp.data.email);
+      localStorage.setItem("cart", resp.data.cart);
+      localStorage.setItem("favorites", resp.data.favorites);
+      localStorage.setItem("bought", resp.data.bought);
       setDisable(true);
       show(false);
     } catch (error) {
@@ -50,7 +53,8 @@ function FooterLogin({ show }) {
   }
 
   return (
-    <Container>
+    <Container >
+      <div></div>
       <div style={{ display: appearFooterSignUp ? "none" : "flex" }}>
         <p>Conecte-se à sua conta!</p>
         <Forms onSubmit={signInHandler}>
@@ -107,19 +111,29 @@ const loadingData = {
 };
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  > div {
+  background-color:rgba(0,0,0,0.2);
+  width:100%;
+  height:100%;
+> div:first-child{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.2);
+  }
+> div {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
     position: fixed;
     bottom: 50px;
     left: 0;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+    padding:20px;
+    box-sizing:border-box;
     width: 100%;
-    height: 350px;
+    height: 300px;
     border-radius: 40px 40px 0 0;
     background-color: #96482b;
     p {
@@ -130,17 +144,18 @@ const Container = styled.div`
   }
 `;
 const Forms = styled.form`
-  width: 85%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin:10px 0;
   input {
     box-sizing: border-box;
     border-radius: 5px;
     border: 2px solid #878460;
     width: 100%;
-    height: 58px;
+    height: 50px;
     background-color: #e7ddc8;
     font-size: 20px;
     margin-bottom: 10px;
@@ -159,9 +174,7 @@ const Forms = styled.form`
     width: 100%;
   }
   button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin:0;
     border-radius: 5px;
     border: 2px solid #878460;
     width: 100%;

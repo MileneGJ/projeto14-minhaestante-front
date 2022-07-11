@@ -20,7 +20,7 @@ function Header() {
   let genres = [...new Set(Allgenres)]; //array with unique values
 
   function searchByGenre(g) {
-    let URL = `https://apimyshelf.herokuapp.com/books?field=genre&keyword=${g}`;
+    let URL = `http://localhost:5000/books?field=genre&keyword=${g}`;
     let promise = axios.get(URL);
     promise.then((response) => {
       setShowMenu(false);
@@ -35,7 +35,7 @@ function Header() {
 
   function performSearch(e) {
     e.preventDefault();
-    let URL = `https://apimyshelf.herokuapp.com/books?field=${searchInfo.field}&keyword=${searchInfo.keyword}`;
+    let URL = `http://localhost:5000/books?field=${searchInfo.field}&keyword=${searchInfo.keyword}`;
     let promise = axios.get(URL);
     promise.then((response) => {
       setSearchBookList(response.data);
@@ -90,12 +90,13 @@ function Header() {
           }}
         ></div>
         <ul>
+          <p onClick={() => {navigate("/login"); setShowMenu(false)}}>Fazer Login</p>
+          <h4> Catálogo: </h4>
           {genres.map((g, index) => (
             <li key={index} onClick={() => searchByGenre(g)}>
               {g}
             </li>
           ))}
-          <p onClick={() => {navigate("/login"); setShowMenu(false)}}>Login</p>
         </ul>
       </GenreList>
     </HeaderStyled>
@@ -173,6 +174,11 @@ const GenreList = styled.div`
   p {
     font-size: 16px;
     font-weight: 700;
+  }
+  h4 {
+    margin:50px 0 20px 0;
+    font-size: 22px;
+    text-decoration:underline;
   }
 `;
 

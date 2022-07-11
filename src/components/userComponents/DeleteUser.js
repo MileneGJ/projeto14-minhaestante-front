@@ -30,7 +30,7 @@ export default function DeleteUser() {
 
     try {
       await axios.delete(
-        `https://apimyshelf.herokuapp.com/users/${userId}`,
+        `http://localhost:5000/users/${userId}`,
         config
       );
       navigate("/");

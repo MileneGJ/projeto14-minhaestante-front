@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../contexts/userContext";
 import PurchaseContext from "../../contexts/purchaseContext";
 import styled from "styled-components";
@@ -14,27 +14,19 @@ export default function Checkout() {
   let token = localStorage.getItem("token");
 
   const navigate = useNavigate();
-  useEffect(() => {
-    if (purchaseDetails.address.length === 0) {
-      alert("Você precisa adicionar seu endereço no carrinho!");
-      navigate("/cart");
-      return;
-    }
-  }, []);
   function goToConfirm() {
     try {
-      const URL = `https://apimyshelf.herokuapp.com/users/bought/${userData.userId}`;
-      const promise = axios.post(URL, userData.cart);
+      const URL = `http://localhost:5000/users/bought/${userData.userId}`;
+      const config = {
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    }
+      const promise = axios.post(URL, userData.cart,config);
       promise.then((response) => setUserData(response.data));
       alert(
         `Sua compra será confirmada mediante pagamento por ${purchaseDetails.payWay}`
       );
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
       navigate("/");
     } catch (error) {}
   }
