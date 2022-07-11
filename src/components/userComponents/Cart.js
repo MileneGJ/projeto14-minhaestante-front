@@ -6,7 +6,7 @@ import PurchaseContext from "../../contexts/purchaseContext";
 import axios from "axios";
 
 function Cart() {
-  const { userData} = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   const { purchaseDetails, setPurchaseDetails } = useContext(PurchaseContext);
   const navigate = useNavigate();
   let userId = localStorage.getItem("userId");
@@ -15,28 +15,32 @@ function Cart() {
   useEffect(() => {
     const URL = `https://apimyshelf.herokuapp.com/users/cart/${userId}`;
     const config = {
-      headers:{
-          Authorization:`Bearer ${token}`
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const promise = axios.get(URL, config);
+    promise.then((response) => {
+      let sum = 0;
+      if (response.data.length > 0) {
+        response.data.map((b) => {
+          sum += parseInt(b.price.replace("R$", "").replace(/,/, /\./));
+        });
       }
-  }
-  const promise = axios.get(URL,config);
-  promise.then(response=>{
-  let sum = 0;
-    if (response.data.length > 0) {
-      response.data.map((b) => {
-        sum += parseInt(b.price.replace("R$", "").replace(/,/, /\./));
+      let formattedTotal = `R$${sum.toFixed(2)}`.replace(/\./, ",");
+      setPurchaseDetails({
+        ...purchaseDetails,
+        total: formattedTotal,
+        productList: response.data,
       });
-    }
-    let formattedTotal = `R$${sum.toFixed(2)}`.replace(/\./, ",");
-    setPurchaseDetails({ ...purchaseDetails, total: formattedTotal, productList:response.data });
-  })
-  promise.catch(handleError)
+    });
+    promise.catch(handleError);
   }, []);
 
   function handleError(error) {
     alert(`${error.response.status} - ${error.response.data}`);
-    if(error.response.status===401){
-      navigate("/login")
+    if (error.response.status === 401) {
+      navigate("/login");
     }
   }
 
@@ -45,29 +49,46 @@ function Cart() {
     setPurchaseDetails({ ...purchaseDetails, address: newAddress });
   }
 
-function goToCheckout(){
-  if (purchaseDetails.address?.length===0) {
-    alert("Você precisa adicionar seu endereço no carrinho!");
-  } else {
-    navigate("/checkout")
+  function goToCheckout() {
+    if (purchaseDetails.address?.length === 0) {
+      alert("Você precisa adicionar seu endereço no carrinho!");
+    } else {
+      navigate("/checkout");
+    }
   }
-}
 
+  function deleteFromCart(bookId) {
+    const URL = `https://apimyshelf.herokuapp.com/users/cart/${userId}`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const promise = axios.put(URL, { bookId }, config);
+    promise.then((response) =>
+      setPurchaseDetails({ ...purchaseDetails, productList: response.data })
+    );
+    promise.catch((error) => console.log(error));
+  }
 
   function BookToBuy({ bookID, price, title, image, author }) {
     return (
-      <Link to={`/book/${bookID}`}>
-        <BookInfo>
-          <div>
+      <BookInfo>
+        <div>
+          <Link to={`/book/${bookID}`}>
             <img src={image} alt="" />
-          </div>
-          <span>
-            <h2>{title}</h2>
-            <p>{author}</p>
-            <h3>{price}</h3>
-          </span>
-        </BookInfo>
-      </Link>
+          </Link>
+        </div>
+        <span>
+          <h2>{title}</h2>
+          <p>{author}</p>
+          <h3>{price}</h3>
+          <ion-icon
+            onClick={() => deleteFromCart(bookID)}
+            name="close-circle"
+          ></ion-icon>
+        </span>
+      </BookInfo>
     );
   }
 
@@ -75,10 +96,10 @@ function goToCheckout(){
     <Container>
       <h1>Meu Carrinho:</h1>
 
-      {userData.cart?.length > 0 ? (
+      {purchaseDetails.productList?.length > 0 ? (
         <>
           <div>
-            {userData.cart.map((f, index) => (
+            {purchaseDetails.productList.map((f, index) => (
               <BookToBuy
                 key={index}
                 bookID={f._id}
@@ -98,9 +119,7 @@ function goToCheckout(){
             <h2>VALOR TOTAL:</h2>
             <h3>{purchaseDetails.total}</h3>
           </span>
-          <button onClick={goToCheckout}>
-            Finalizar Pedido
-          </button>
+          <button onClick={goToCheckout}>Finalizar Pedido</button>
         </>
       ) : (
         ""
@@ -110,6 +129,7 @@ function goToCheckout(){
 }
 
 const Container = styled.div`
+  width: 100%;
   margin: 60px 0;
   padding: 20px;
   box-sizing: border-box;
@@ -137,7 +157,6 @@ const Container = styled.div`
     bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
-
   }
 
   > span {
@@ -169,8 +188,9 @@ const Container = styled.div`
 `;
 const BookInfo = styled.div`
   display: flex;
-
+  width: 100%;
   span {
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -179,10 +199,20 @@ const BookInfo = styled.div`
   div {
     overflow: hidden;
     margin: 20px;
-    width: 140px;
+  }
+  h2,
+  p {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   img {
     width: 110px;
+  }
+  ion-icon {
+    font-size: 30px;
+    color: #666966;
   }
 `;
 

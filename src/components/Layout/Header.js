@@ -46,7 +46,7 @@ function Header() {
 
   return (
     <HeaderStyled>
-      <img src={logo} alt="" />
+      <img onClick={() => navigate("/")} src={logo} alt="" />
       <form onSubmit={performSearch}>
         <input
           type="search"
@@ -90,7 +90,14 @@ function Header() {
           }}
         ></div>
         <ul>
-          <p onClick={() => {navigate("/login"); setShowMenu(false)}}>Fazer Login</p>
+          <p
+            onClick={() => {
+              navigate("/login");
+              setShowMenu(false);
+            }}
+          >
+            Fazer Login
+          </p>
           <h4> Catálogo: </h4>
           {genres.map((g, index) => (
             <li key={index} onClick={() => searchByGenre(g)}>
@@ -176,9 +183,9 @@ const GenreList = styled.div`
     font-weight: 700;
   }
   h4 {
-    margin:50px 0 20px 0;
+    margin: 50px 0 20px 0;
     font-size: 22px;
-    text-decoration:underline;
+    text-decoration: underline;
   }
 `;
 

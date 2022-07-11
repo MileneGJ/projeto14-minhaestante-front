@@ -49,6 +49,7 @@ const Booklisting = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  padding-bottom: 20px;
   a{
     margin: 13px 13px;
   }

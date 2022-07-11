@@ -24,7 +24,6 @@ function BookPage() {
   function verifyLike() {
     let isBookFavorite;
     if (userData.favorites?.length > 0) {
-      console.log(userData.favorites);
       isBookFavorite = userData.favorites.filter((f) => f?._id === BookID);
       if (isBookFavorite.length > 0) {
         return true;
@@ -81,7 +80,7 @@ function BookPage() {
       setAppearFooterLogin(true);
     }
   }
-  
+
   function handleError(error) {
     if (error.response.status === 401) {
       setAppearFooterLogin(true);
